@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{template "general/header"}}
+    
+</head>
+<body class="bg-green-700">
+    <!-- TODO: answer here -->
+    <center>
+        <div class="bg-white container mx-auto flex px-10 py-10 mt-10 md:flex-row flex-col items-center rounded-2xl max-w-3xl">
+            <div class="lg:flex-grow  flex-col md:items-start md:text-left mb-16 items-center w-2xl"> 
+                <center>
+                <a href="index.html">
+                    <span class="text-center text-3xl font-bold whitespace-nowrap text-green-700">Kanban</span>
+                </a>
+                </center>
+                <h1 class="text-xl font-bold mt-5 tracking-tight text-gray-900">Register</h1>
+                
+                <form class="mt-5 space-y-6" action="/register/process" method="POST">
+                    <div class="rounded-md shadow-sm space-y-px">
+                        <div class="">
+                            <label for="fullname" class="font-medium">Fullname</label>
+                            <input id="fullname" name="fullname" type="fullname" autocomplete="fullname" required class="w-full rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm" placeholder="Type fullname here">
+                        </div>
+                        <div class="">
+                            <label for="email" class="font-medium">Email</label>
+                            <input id="email" name="email" type="email" autocomplete="email" required class="w-full border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm" placeholder="Type email here">
+                        </div>
+                        <div class="">
+                            <label for="password" class="font-medium">Password</label>
+                            <input id="password" name="password" type="password" autocomplete="current-password" required class="w-full rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm" placeholder="Type password here">
+                        </div>
+                    </div> 
+                    <div>
+                    <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-green-600 py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Register
+                    </button>
+                    </div>
+                    <div>
+                        <div class="text-sm text-center">
+                            <a href="/login" class="font-medium text-green-600 hover:text-green-500">Have Any Account? Log in Now!</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="lg:max-w-md md:w-1/2 w-4/5">
+                <left>
+                
+                </left>
+                <img class="object-cover object-center rounded" alt="mobile-log" src="https://ik.imagekit.io/c3h30jzgh/2.png?ik-sdk-version=javascript-1.4.3&updatedAt=1671172173265">
+            </div>
+        </div>
+        
+      </center>
+</body>
+</html>
