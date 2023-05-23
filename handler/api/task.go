@@ -13,6 +13,7 @@ type TaskAPI interface {
 	GetTask(w http.ResponseWriter, r *http.Request)
 	CreateNewTask(w http.ResponseWriter, r *http.Request)
 	UpdateTask(w http.ResponseWriter, r *http.Request)
+	UpdateTaskReminder(w http.ResponseWriter, r *http.Request)
 	DeleteTask(w http.ResponseWriter, r *http.Request)
 	UpdateTaskCategory(w http.ResponseWriter, r *http.Request)
 }
@@ -95,8 +96,9 @@ func (t *taskAPI) CreateNewTask(w http.ResponseWriter, r *http.Request) {
 		// ID:          task.ID,
 		Title:       task.Title,
 		Description: task.Description,
-		CategoryID:  task.CategoryID,
-		UserID:      idLogin,
+		// Completed:   task.Completed,
+		CategoryID: task.CategoryID,
+		UserID:     idLogin,
 	})
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -177,6 +179,41 @@ func (t *taskAPI) UpdateTask(w http.ResponseWriter, r *http.Request) {
 		"user_id": idLogin,
 		"task_id": tsk.ID,
 		"message": "success update task",
+	})
+}
+
+// fitur reminder
+func (t *taskAPI) UpdateTaskReminder(w http.ResponseWriter, r *http.Request) {
+	var task entity.TaskRequest
+	id := r.Context().Value("id").(string)
+	idLogin, _ := strconv.Atoi(id)
+
+	err := json.NewDecoder(r.Body).Decode(&task)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err.Error())
+		json.NewEncoder(w).Encode(entity.NewErrorResponse("invalid decode json"))
+		return
+	}
+
+	if id == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(entity.NewErrorResponse("invalid user id"))
+	}
+	rmdr, err := t.taskService.UpdateTask(r.Context(), &entity.Task{
+		ID:         task.ID,
+		Reminder:   task.Reminder,
+		CategoryID: task.CategoryID,
+	})
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(entity.NewErrorResponse("error internal server"))
+	}
+	w.WriteHeader(200)
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"user_id": idLogin,
+		"task_id": rmdr.ID,
+		"message": "success update task reminder",
 	})
 }
 

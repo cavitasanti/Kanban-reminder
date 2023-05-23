@@ -13,6 +13,7 @@ type TaskRepository interface {
 	GetTaskByID(ctx context.Context, id int) (entity.Task, error)
 	GetTasksByCategoryID(ctx context.Context, catId int) ([]entity.Task, error)
 	UpdateTask(ctx context.Context, task *entity.Task) error
+	UpdateTaskReminder(ctx context.Context, task *entity.Task) error
 	DeleteTask(ctx context.Context, id int) error
 }
 
@@ -67,6 +68,17 @@ func (r *taskRepository) GetTasksByCategoryID(ctx context.Context, catId int) ([
 func (r *taskRepository) UpdateTask(ctx context.Context, task *entity.Task) error {
 	// return nil // TODO: replace this
 	err := r.db.WithContext(ctx).Model(&entity.Task{}).Where("id = ?", task.ID).Updates(&task).Error
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
+}
+
+// UpdateTaskReminder updates the reminder of a task
+func (r *taskRepository) UpdateTaskReminder(ctx context.Context, task *entity.Task) error {
+	// return nil // TODO: replace this
+	err := r.db.WithContext(ctx).Model(&entity.Task{}).Where("id = ?", task.ID).Updates(&entity.Task{Reminder: task.Reminder}).Error
 	if err != nil {
 		return err
 	} else {

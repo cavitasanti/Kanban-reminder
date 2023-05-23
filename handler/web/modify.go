@@ -17,6 +17,9 @@ type ModifyWeb interface {
 	UpdateTask(w http.ResponseWriter, r *http.Request)
 	UpdateTaskProcess(w http.ResponseWriter, r *http.Request)
 
+	UpdateTaskReminder(w http.ResponseWriter, r *http.Request)
+	UpdateTaskReminderProcess(w http.ResponseWriter, r *http.Request)
+
 	DeleteTask(w http.ResponseWriter, r *http.Request)
 	DeleteCategory(w http.ResponseWriter, r *http.Request)
 }
@@ -170,6 +173,65 @@ func (a *modifyWeb) UpdateTaskProcess(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 		} else {
 			http.Redirect(w, r, "/task/update?task_id="+taskId, http.StatusSeeOther)
+		}
+	} else {
+		_, err := a.taskClient.UpdateCategoryTask(taskId, categoryId, r.Context().Value("id").(string))
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+	}
+
+}
+
+func (a *modifyWeb) UpdateTaskReminder(w http.ResponseWriter, r *http.Request) {
+	taskId := r.URL.Query().Get("task_id")
+
+	task, err := a.taskClient.GetTaskById(taskId, r.Context().Value("id").(string))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// ignore this
+	_ = task
+	//
+
+	filepath := path.Join("views", "main", "update-task-reminder.html")
+	header := path.Join("views", "general", "header.html")
+	tpl, err := template.ParseFS(a.embed, filepath, header)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	if err := tpl.Execute(w, task); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+func (a *modifyWeb) UpdateTaskReminderProcess(w http.ResponseWriter, r *http.Request) {
+	//reminder process
+	taskId := r.URL.Query().Get("task_id")
+	reminder := r.FormValue("reminder")
+	categoryId := r.URL.Query().Get("category_id")
+
+	if categoryId == "" {
+		// reminder := r.FormValue("reminder")
+
+		respCode, err := a.taskClient.UpdateTaskReminder(taskId, reminder, r.Context().Value("id").(string))
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		if respCode == 200 {
+			http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+		} else {
+			http.Redirect(w, r, "/task/update/reminder?task_id="+taskId, http.StatusSeeOther)
 		}
 	} else {
 		_, err := a.taskClient.UpdateCategoryTask(taskId, categoryId, r.Context().Value("id").(string))

@@ -142,6 +142,9 @@ func RunClient(mux *http.ServeMux, embed embed.FS) *http.ServeMux {
 	mux.Handle("/task/update", middleware.Auth(http.HandlerFunc(client.ModifyWeb.UpdateTask)))
 	mux.Handle("/task/update/process", middleware.Auth(http.HandlerFunc(client.ModifyWeb.UpdateTaskProcess)))
 
+	mux.Handle("/task/update/reminder", middleware.Auth(http.HandlerFunc(client.ModifyWeb.UpdateTaskReminder)))
+	mux.Handle("/task/update/reminder/process", middleware.Auth(http.HandlerFunc(client.ModifyWeb.UpdateTaskReminderProcess)))
+
 	mux.Handle("/task/delete", middleware.Auth(http.HandlerFunc(client.ModifyWeb.DeleteTask)))
 	mux.Handle("/category/delete", middleware.Auth(http.HandlerFunc(client.ModifyWeb.DeleteCategory)))
 

@@ -11,6 +11,7 @@ type TaskService interface {
 	GetTaskByID(ctx context.Context, id int) (entity.Task, error)
 	StoreTask(ctx context.Context, task *entity.Task) (entity.Task, error)
 	UpdateTask(ctx context.Context, task *entity.Task) (entity.Task, error)
+	UpdateTaskReminder(ctx context.Context, task *entity.Task) (entity.Task, error)
 	DeleteTask(ctx context.Context, id int) error
 }
 
@@ -52,6 +53,24 @@ func (s *taskService) UpdateTask(ctx context.Context, task *entity.Task) (entity
 	}
 
 	err := s.taskRepo.UpdateTask(ctx, task)
+	if err != nil {
+		return entity.Task{}, err
+	}
+	return *task, nil
+}
+
+func (s *taskService) UpdateTaskReminder(ctx context.Context, task *entity.Task) (entity.Task, error) {
+	if task.CategoryID != 0 {
+		cat, err := s.categoryRepo.GetCategoryByID(ctx, task.CategoryID)
+		if err != nil {
+			return entity.Task{}, err
+		}
+
+		if cat.ID == 0 || cat.Type == "" || cat.UserID != task.UserID {
+			return entity.Task{}, err
+		}
+	}
+	err := s.taskRepo.UpdateTaskReminder(ctx, task)
 	if err != nil {
 		return entity.Task{}, err
 	}
