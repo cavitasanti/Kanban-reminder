@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"path"
 	"text/template"
+	"time"
 )
 
 type AuthWeb interface {
@@ -58,11 +59,12 @@ func (a *authWeb) LoginProcess(w http.ResponseWriter, r *http.Request) {
 
 	if status == 200 {
 		http.SetCookie(w, &http.Cookie{
-			Name:   "user_id",
-			Value:  fmt.Sprintf("%d", userId),
-			Path:   "/",
-			MaxAge: 31536000,
-			Domain: "",
+			Name:     "user_id",
+			Value:    fmt.Sprintf("%d", userId),
+			Path:     "/",
+			Expires:  time.Now().Add(1 * time.Hour),
+			Domain:   "",
+			HttpOnly: true,
 		})
 
 		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)

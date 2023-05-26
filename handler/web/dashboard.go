@@ -3,10 +3,12 @@ package web
 import (
 	"a21hc3NpZ25tZW50/client"
 	"embed"
+	"fmt"
 	"log"
 	"net/http"
 	"path"
 	"text/template"
+	"time"
 )
 
 type DashboardWeb interface {
@@ -42,6 +44,17 @@ func (d *dashboardWeb) Dashboard(w http.ResponseWriter, r *http.Request) {
 		},
 		"categoryDec": func(catId int) int {
 			return catId - 1
+		},
+		"CorrectTime": func(t time.Time) string {
+			t = t.UTC()
+
+			if t.IsZero() {
+				return ""
+			}
+
+			return fmt.Sprintf("%d-%02d-%02d %02d:%02d:%02d",
+				t.Year(), t.Month(), t.Day(),
+				t.Hour(), t.Minute(), t.Second())
 		},
 	}
 

@@ -62,17 +62,17 @@ func (s *userService) Register(ctx context.Context, user *entity.User) (entity.U
 
 	// create 4 category
 	// Todo, In Progress, Done, Backlog
-	categories := []entity.Category{
-		{Type: "Todo", UserID: newUser.ID, CreatedAt: time.Now()},
-		{Type: "In Progress", UserID: newUser.ID, CreatedAt: time.Now()},
-		{Type: "Done", UserID: newUser.ID, CreatedAt: time.Now()},
-		{Type: "Backlog", UserID: newUser.ID, CreatedAt: time.Now()},
-	}
+	// categories := []entity.Category{
+	// 	{Type: "Todo", UserID: newUser.ID, CreatedAt: time.Now()},
+	// 	{Type: "In Progress", UserID: newUser.ID, CreatedAt: time.Now()},
+	// 	{Type: "Done", UserID: newUser.ID, CreatedAt: time.Now()},
+	// 	{Type: "Backlog", UserID: newUser.ID, CreatedAt: time.Now()},
+	// }
 
-	err = s.categoryRepo.StoreManyCategory(ctx, categories)
-	if err != nil {
-		return *user, err
-	}
+	// err = s.categoryRepo.StoreManyCategory(ctx, categories)
+	// if err != nil {
+	// 	return *user, err
+	// }
 
 	return newUser, nil
 }
