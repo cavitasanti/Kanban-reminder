@@ -16,6 +16,9 @@ type TaskAPI interface {
 	UpdateTaskReminder(w http.ResponseWriter, r *http.Request)
 	DeleteTask(w http.ResponseWriter, r *http.Request)
 	UpdateTaskCategory(w http.ResponseWriter, r *http.Request)
+
+	MarkTask(w http.ResponseWriter, r *http.Request)
+	UnMarkTask(w http.ResponseWriter, r *http.Request)
 }
 
 type taskAPI struct {
@@ -24,6 +27,32 @@ type taskAPI struct {
 
 func NewTaskAPI(taskService service.TaskService) *taskAPI {
 	return &taskAPI{taskService}
+}
+
+func (t *taskAPI) MarkTask(w http.ResponseWriter, r *http.Request) {
+	taskId := r.URL.Query().Get("task_id")
+
+	err := t.taskService.MarkTask(r.Context(), taskId)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(entity.NewErrorResponse("internal server error"))
+		return
+	}
+
+	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+}
+
+func (t *taskAPI) UnMarkTask(w http.ResponseWriter, r *http.Request) {
+	taskId := r.URL.Query().Get("task_id")
+
+	err := t.taskService.UnMarkTask(r.Context(), taskId)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(entity.NewErrorResponse("internal server error"))
+		return
+	}
+
+	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 }
 
 func (t *taskAPI) GetTask(w http.ResponseWriter, r *http.Request) {
@@ -166,6 +195,7 @@ func (t *taskAPI) UpdateTask(w http.ResponseWriter, r *http.Request) {
 	tsk, err := t.taskService.UpdateTask(r.Context(), &entity.Task{
 		ID:          task.ID,
 		Title:       task.Title,
+		Reminder:    task.Reminder,
 		Description: task.Description,
 		CategoryID:  task.CategoryID,
 	})

@@ -216,7 +216,11 @@ func (a *modifyWeb) UpdateTaskReminder(w http.ResponseWriter, r *http.Request) {
 func (a *modifyWeb) UpdateTaskReminderProcess(w http.ResponseWriter, r *http.Request) {
 	//reminder process
 	taskId := r.URL.Query().Get("task_id")
-	reminder := r.FormValue("reminder")
+	reminder := r.FormValue("reminder") + ":00Z"
+	if r.FormValue("reminder") == "" {
+		reminder = "0001-01-01T00:00:00Z"
+	}
+
 	categoryId := r.URL.Query().Get("category_id")
 
 	if categoryId == "" {

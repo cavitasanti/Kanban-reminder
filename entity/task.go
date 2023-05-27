@@ -7,7 +7,7 @@ type Task struct {
 	Title       string    `json:"title" gorm:"type:varchar(255);not null"`
 	Description string    `json:"description" gorm:"type:text;not null"`
 	Reminder    time.Time `json:"reminder"`
-	Completed   bool      `json:"completed" gorm:"type:boolean;default:0;not null"`
+	Completed   bool      `json:"completed" gorm:"type:boolean"`
 	CategoryID  int       `json:"category_id" gorm:"type:int;not null"`
 	UserID      int       `json:"user_id" gorm:"type:int;not null"`
 	CreatedAt   time.Time `json:"created_at"`

@@ -101,6 +101,10 @@ func RunServer(db *gorm.DB, mux *http.ServeMux) *http.ServeMux {
 	MuxRoute(mux, "PUT", "/api/v1/tasks/update/category", middleware.Put(middleware.Auth(http.HandlerFunc(apiHandler.TaskAPIHandler.UpdateTaskCategory))), "?task_id=")
 	MuxRoute(mux, "DELETE", "/api/v1/tasks/delete", middleware.Delete(middleware.Auth(http.HandlerFunc(apiHandler.TaskAPIHandler.DeleteTask))), "?task_id=")
 
+	// endpoint api
+	MuxRoute(mux, "GET", "/api/v1/task/mark", middleware.Get(middleware.Auth(http.HandlerFunc(apiHandler.TaskAPIHandler.MarkTask))), "?task_id=")
+	MuxRoute(mux, "GET", "/api/v1/task/unmark", middleware.Get(middleware.Auth(http.HandlerFunc(apiHandler.TaskAPIHandler.UnMarkTask))), "?task_id=")
+
 	MuxRoute(mux, "GET", "/api/v1/categories/get", middleware.Get(middleware.Auth(http.HandlerFunc(apiHandler.CategoryAPIHandler.GetCategory))))
 	MuxRoute(mux, "GET", "/api/v1/categories/dashboard", middleware.Get(middleware.Auth(http.HandlerFunc(apiHandler.CategoryAPIHandler.GetCategoryWithTasks))))
 	MuxRoute(mux, "POST", "/api/v1/categories/create", middleware.Post(middleware.Auth(http.HandlerFunc(apiHandler.CategoryAPIHandler.CreateNewCategory))))
