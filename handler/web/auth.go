@@ -4,6 +4,7 @@ import (
 	"a21hc3NpZ25tZW50/client"
 	"embed"
 	"fmt"
+	"log"
 	"net/http"
 	"path"
 	"text/template"
@@ -38,8 +39,11 @@ func (a *authWeb) Login(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	data := map[string]interface{}{
+		"Message": "",
+	}
 
-	err = t.Execute(w, nil)
+	err = t.Execute(w, data)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -52,10 +56,6 @@ func (a *authWeb) LoginProcess(w http.ResponseWriter, r *http.Request) {
 	password := r.FormValue("password")
 
 	userId, status, err := a.userClient.Login(email, password)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
 
 	if status == 200 {
 		http.SetCookie(w, &http.Cookie{
@@ -69,7 +69,22 @@ func (a *authWeb) LoginProcess(w http.ResponseWriter, r *http.Request) {
 
 		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 	} else {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		filepath := path.Join("views", "auth", "login.html")
+		header := path.Join("views", "general", "header.html")
+
+		t, _ := template.ParseFS(a.embed, filepath, header)
+
+		data := map[string]interface{}{
+			"Message": err.Error(),
+		}
+
+		log.Print(err.Error())
+		err = t.Execute(w, data)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		// http.Redirect(w, r, "/login", http.StatusSeeOther)
 	}
 }
 
@@ -84,8 +99,10 @@ func (a *authWeb) Register(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
-	err = t.Execute(w, nil)
+	data := map[string]interface{}{
+		"Message": "",
+	}
+	err = t.Execute(w, data)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -99,10 +116,10 @@ func (a *authWeb) RegisterProcess(w http.ResponseWriter, r *http.Request) {
 	password := r.FormValue("password")
 
 	userId, status, err := a.userClient.Register(fullname, email, password)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	// if err != nil {
+	// 	http.Error(w, err.Error(), http.StatusInternalServerError)
+	// 	return
+	// }
 
 	if status == 201 {
 		http.SetCookie(w, &http.Cookie{
@@ -115,7 +132,21 @@ func (a *authWeb) RegisterProcess(w http.ResponseWriter, r *http.Request) {
 
 		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 	} else {
-		http.Redirect(w, r, "/register", http.StatusSeeOther)
+		filepath := path.Join("views", "auth", "register.html")
+		header := path.Join("views", "general", "header.html")
+
+		t, _ := template.ParseFS(a.embed, filepath, header)
+
+		data := map[string]interface{}{
+			"Message": err.Error(),
+		}
+
+		log.Print(err.Error())
+		err = t.Execute(w, data)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
 }
 

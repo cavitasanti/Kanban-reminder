@@ -51,7 +51,7 @@ func (u *userAPI) Login(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(500)
 		log.Println(err.Error())
-		json.NewEncoder(w).Encode(entity.NewErrorResponse("error internal server"))
+		json.NewEncoder(w).Encode(entity.NewErrorResponse(err.Error()))
 		return
 	}
 
@@ -97,7 +97,7 @@ func (u *userAPI) Register(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(500)
 		log.Println(err.Error())
-		json.NewEncoder(w).Encode(entity.NewErrorResponse("error internal server"))
+		json.NewEncoder(w).Encode(entity.NewErrorResponse(err.Error()))
 		return
 	}
 

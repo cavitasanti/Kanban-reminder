@@ -4,6 +4,7 @@ import (
 	"a21hc3NpZ25tZW50/config"
 	"bytes"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"net/http"
 )
@@ -61,7 +62,7 @@ func (u *userClient) Login(email, password string) (userId int, respCode int, er
 		if result["user_id"] != nil {
 			return int(result["user_id"].(float64)), resp.StatusCode, nil
 		} else {
-			return 0, resp.StatusCode, nil
+			return 0, resp.StatusCode, errors.New(string(result["error"].(string)))
 		}
 	}
 }
@@ -106,7 +107,7 @@ func (u *userClient) Register(fullname, email, password string) (userId int, res
 		if result["user_id"] != nil {
 			return int(result["user_id"].(float64)), resp.StatusCode, nil
 		} else {
-			return 0, resp.StatusCode, nil
+			return 0, resp.StatusCode, errors.New(string(result["error"].(string)))
 		}
 	}
 }

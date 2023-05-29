@@ -8,7 +8,7 @@
 <body>
 
     <header id="home">
-        <nav class="fixed bg-white drop-shadow border-2 sm:px-5 w-full">
+        <nav class="fixed bg-white z-40 drop-shadow border-2 sm:px-5 w-full">
             <div class="max-w-screen-xl flex flex-wrap justify-between items-center mx-auto">
                 <a href="index.html" class="flex items-center">
                     <span class="self-center text-3xl font-bold text-[#2b3d25]">Kanban</span>
@@ -43,9 +43,10 @@
                             </button>
                         </form>
                         <li>
-                            <a href="/logout"
+                            <button data-modal-target="logoutVerif-modal" data-modal-toggle="logoutVerif-modal"
                                 class="block py-2 pr-4 pl-3 text-lg text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 ">Log
-                                out</a>
+                                out
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -57,117 +58,136 @@
             <div
                 class=" md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
                 <h1 class="text-3xl mt-5 mb-8 font-bold text-[#2b3d25]">My Activites</h1>
-                <form action="/category/add" method="GET">
-                    <button type="submit"
+                <!-- <form action="/category/add" method="GET"> -->
+                    <button type="submit" data-modal-target="AddCategory-modal" data-modal-toggle="AddCategory-modal"
                         class="hover:shadow-xl font-medium inline-flex text-white bg-[#2b3d25] py-1 px-8 focus:outline-none rounded-md text-sm xl:text-base">
                         <h1>Add Category</h1>
-                    </button>
-                </form>
+                    </button> 
+                    
+  
+                <!-- </form>  -->
             </div>
         </div>
-        <div class="flex flex-grow px-10 mt-8 space-x-6">
-            {{range $c := .categories}}
-            <div class="flex flex-col flex-shrink-0 w-72">
-                <div class="flex justify-between items-center flex-shrink-0 h-10 px-2 bg-[#abb390] rounded-t-2xl">
-                    <span class="block text-sm font-semibold">{{$c.Type}}</span>
-                    <div class="flex flex-between">
-                        <a href="/task/add?category={{$c.ID}}">
-                            <button
-                                class="flex items-center justify-center w-6 h-6 ml-auto text-grey-900 rounded hover:bg-gretext-grey-900 hover:text-indigo-100">
-                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                </svg>
-                            </button>
-                        </a>
-                        <a href="/category/delete?category_id={{$c.ID}}">
-                            <button
-                                class="flex items-center justify-center w-6 h-6 ml-auto text-grey-900 rounded hover:bg-gretext-grey-900 hover:text-indigo-100">
-                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M6.2253 4.81108C5.83477 4.42056 5.20161 4.42056 4.81108 4.81108C4.42056 5.20161 4.42056 5.83477 4.81108 6.2253L10.5858 12L4.81114 17.7747C4.42062 18.1652 4.42062 18.7984 4.81114 19.1889C5.20167 19.5794 5.83483 19.5794 6.22535 19.1889L12 13.4142L17.7747 19.1889C18.1652 19.5794 18.7984 19.5794 19.1889 19.1889C19.5794 18.7984 19.5794 18.1652 19.1889 17.7747L13.4142 12L19.189 6.2253C19.5795 5.83477 19.5795 5.20161 19.189 4.81108C18.7985 4.42056 18.1653 4.42056 17.7748 4.81108L12 10.5858L6.2253 4.81108Z"
-                                        fill="currentColor"></path>
-                                </svg>
-                            </button>
-                        </a>
+        {{if .categories | len | eq 0}}
+            <div class="flex px-10 mt-10 items-center justify-center">
+                <div class="flex flex-wrap flex-row-2 items-center justify-center">
+                    <div class="flex w-full items-center justify-center">
+                        <svg class="text-gray-300 w-24 h-24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M10.5 8.25h3l-3 4.5h3"></path>
+                        </svg>
                     </div>
-                </div>
-                <div class="flex flex-col rounded-b-2xl">
-                    {{range $t := $c.Tasks}}
-                    <div class="relative flex justify-between flex-col p-4 mt-1 bg-white rounded-t-sm rounded-b-2xl shadow-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100"
-                        draggable="true">
-                        {{if $t.Completed}}
-                        <div class="flex justify-between items-between">
-                            <h2 class="text-lg font-medium">{{$t.Title}}</h2>
-                            <p class="bg-blue-400 text-white font-bold px-2 rounded">Done</p>
-                        </div>
-                        {{else}}
-                        <h2 class="text-lg font-medium">{{$t.Title}}</h2>
-                        {{end}}
-                        <hr class="bg-green-700">
-                        <h4 class="mt-3 text-sm font-medium">{{$t.Description}}</h4>
-                        <input type="hidden" class="reminder" value="{{$t.Title}}"
-                            data-time="{{CorrectTime $t.Reminder}}" data-isView="false"
-                            data-isComplete="{{$t.Completed}}">
+                    <div>
 
-
-
-                        <div class="flex justify-center items-center h-10 px-2 rounded-b-2xl">
-                            <a href="/task/update?task_id={{$t.ID}}">
-                                <button
-                                    class="flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
-                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" fill="none">
-                                        <path
-                                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                    </svg>
-                                </button>
-                            </a>
-                            <a href="/task/update/reminder?task_id={{$t.ID}}">
-                                <button
-                                    class=" flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
-                                    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                        <path
-                                            d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5">
-                                        </path>
-                                    </svg>
-                                </button>
-                            </a>
-                            {{if $t.Completed}}
-                            <a href="/api/v1/task/unmark?task_id={{$t.ID}}"
-                                class="flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">X</a>
-                            {{else}}
-                            <a href="/api/v1/task/mark?task_id={{$t.ID}}"
-                                class="flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">V</a>
-                            {{end}}
-                            <form method="POST" action="/task/delete?task_id={{$t.ID}}">
-                                <button
-                                    class=" flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
-                                    <svg width="16" height="16" fill="currentColor" class="bi bi-trash"
-                                        viewBox="0 0 16 16">
-                                        <path
-                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z">
-                                        </path>
-                                        <path fill-rule="evenodd"
-                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z">
-                                        </path>
-                                    </svg>
-                                </button>
-                            </form>
-                        </div>
-
-
+                        <h1 class="text-2xl mt-5 mb-8 font-medium text-gray-700">Tambahkan Kategori Anda</h1> 
                     </div>
-                    {{end}}
                 </div>
             </div>
+        {{else}}
+            <div class="flex flex-grow px-10 mt-8 space-x-6">
+            {{range $c := .categories}}
+                <div class="flex flex-col flex-shrink-0 w-72">
+                    <div class="flex justify-between items-center flex-shrink-0 h-10 px-2 bg-[#abb390] rounded-t-2xl">
+                        <span class="block text-sm font-semibold">{{$c.Type}}</span>
+                        <div class="flex flex-between">
+                            <!-- <a href="/task/add?category={{$c.ID}}"> -->
+                                <button data-id="{{$c.ID}}" data-modal-target="AddTask-modal" data-modal-toggle="AddTask-modal"
+                                    class="AddTask flex items-center justify-center w-6 h-6 ml-auto text-grey-900 rounded hover:bg-gretext-grey-900 hover:text-indigo-100">
+                                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>
+                                </button>
+                            <!-- </a> -->
+                            <a href="/category/delete?category_id={{$c.ID}}">
+                                <button
+                                    class="flex items-center justify-center w-6 h-6 ml-auto text-grey-900 rounded hover:bg-gretext-grey-900 hover:text-indigo-100">
+                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6.2253 4.81108C5.83477 4.42056 5.20161 4.42056 4.81108 4.81108C4.42056 5.20161 4.42056 5.83477 4.81108 6.2253L10.5858 12L4.81114 17.7747C4.42062 18.1652 4.42062 18.7984 4.81114 19.1889C5.20167 19.5794 5.83483 19.5794 6.22535 19.1889L12 13.4142L17.7747 19.1889C18.1652 19.5794 18.7984 19.5794 19.1889 19.1889C19.5794 18.7984 19.5794 18.1652 19.1889 17.7747L13.4142 12L19.189 6.2253C19.5795 5.83477 19.5795 5.20161 19.189 4.81108C18.7985 4.42056 18.1653 4.42056 17.7748 4.81108L12 10.5858L6.2253 4.81108Z"
+                                            fill="currentColor"></path>
+                                    </svg>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="flex flex-col rounded-b-2xl">
+                        {{range $t := $c.Tasks}}
+                        <div class="card-item relative flex justify-between flex-col p-4 mt-1 bg-white rounded-t-sm rounded-b-2xl shadow-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100"
+                            draggable="true">
+                            {{if $t.Completed}}
+                            <div class="flex justify-between items-between pb-2">
+                                <h2 class="text-lg font-medium">{{$t.Title}}</h2>
+                                <p class="bg-[#2b3d25] text-white font-bold px-2 rounded">Done</p>
+                            </div>
+                            {{else}}
+                            <h2 class="text-lg font-medium">{{$t.Title}}</h2>
+                            {{end}}
+                            <hr class="bg-green-700">
+                            <h4 class="mt-3 text-sm font-medium">{{$t.Description}}</h4>
+                            <!-- <h2 class="bg-gray-200 rounded-lg text-lg font-medium">{{$t.Reminder}}</h2> -->
+                            <input type="hidden" class="reminder" value="{{$t.Title}}"
+                                data-time="{{CorrectTime $t.Reminder}}" data-isView="false"
+                                data-isComplete="{{$t.Completed}}">
+
+
+
+                            <div class="flex justify-center items-center h-10 px-2 rounded-b-2xl">
+                                <a href="/task/update?task_id={{$t.ID}}">
+                                    <button
+                                        class="flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
+                                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" fill="none">
+                                            <path
+                                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                        </svg>
+                                    </button>
+                                </a>
+                                <a href="/task/update/reminder?task_id={{$t.ID}}">
+                                    <button
+                                        class=" flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
+                                        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                            <path
+                                                d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                </a>
+                                {{if $t.Completed}}
+                                <a href="/api/v1/task/unmark?task_id={{$t.ID}}"
+                                    class="flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">X</a>
+                                {{else}}
+                                <a href="/api/v1/task/mark?task_id={{$t.ID}}"
+                                    class="flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">V</a>
+                                {{end}}
+                                <form method="POST" action="/task/delete?task_id={{$t.ID}}">
+                                    <button
+                                        class=" flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
+                                        <svg width="16" height="16" fill="currentColor" class="bi bi-trash"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z">
+                                            </path>
+                                            <path fill-rule="evenodd"
+                                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+
+
+                        </div>
+                        {{end}}
+                    </div>
+                </div>
             {{end}}
         </div>
+        {{end}}
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
+<!-- alert reminder -->
     <script>
         setInterval(() => {
             let allTime = document.querySelectorAll('.reminder');
@@ -181,6 +201,134 @@
             });
         }, 1000)
     </script>
+
+<!-- Add Category modal -->
+    <div id="AddCategory-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-md max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="AddCategory-modal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <span class="sr-only">Back</span>
+                </button>
+                <div class="px-6 py-6 lg:px-8">
+                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Add New Category</h3>
+                    <form class="mt-5 space-y-6" action="/category/create" method="POST">
+                        <div class="rounded-md shadow-sm space-y-px">
+                            <div class="mb-3">
+                                <label for="title" class="font-medium">Title</label>
+                                <input id="title" name="type" type="text" class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm" placeholder="Type category here">
+                            </div>
+                        </div> 
+                        <div>
+                        <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-[#2b3d25] py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Add Category
+                        </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+<!-- Add Task modal -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const openModalButtons = document.querySelectorAll('.AddTask');
+  
+  openModalButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      const id = button.getAttribute('data-id');
+      // Mengganti konten modal dengan data yang sesuai menggunakan ID
+    //   document.getElementById('modal-content').textContent = 'Data dengan ID ' + id;
+      // Membuka modal dengan menambahkan kelas "modal-open" ke elemen modal
+      document.getElementById('AddTask-modal').classList.add('modal-open');
+      console.log(id);
+        document.getElementById('AddTaskForm').action = "/task/create?category=" + id;
+    });
+  });
+});
+
+</script>
+
+<div id="AddTask-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-md max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="AddTask-modal">
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <span class="sr-only">Back</span>
+            </button>
+            <div class="px-6 py-6 lg:px-8">
+                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Add New Task</h3>
+                <form class="mt-5 space-y-6" action="" method="POST" id="AddTaskForm">
+                    <div class="rounded-md shadow-sm space-y-px">
+                        <div class="mb-3">
+                            <label for="title" class="font-medium">Title</label>
+                            <input id="title" name="title" type="text" class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm" placeholder="Type title here">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="font-medium">Description</label>
+                            <input id="description" name="description" type="text" class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm" placeholder="Type description here">
+                        </div>
+                    </div> 
+                    <div>
+                        <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-[#2b3d25] py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Add Task
+                    </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<!-- Log out verification modal -->
+    <div id="logoutVerif-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-md max-h-full">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="logoutVerif-modal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <div class="p-6 text-center">
+                    <svg aria-hidden="true" class="mx-auto mb-4 text-gray-400 w-14 h-14 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to logout?</h3>
+                    <a href="/logout">
+                    <button data-modal-hide="logoutVerif-modal" type="button" class="text-white bg-[#2b3d25] hover:bg-[#abb390] focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                        Yes, I'm sure
+                    </button>
+                    </a>
+                    <button data-modal-hide="logoutVerif-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Search -->
+<script>
+    const searchInput = document.getElementById('simple-search');
+    searchInput.addEventListener('input', searchCards);
+
+    function searchCards() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const cards = document.querySelectorAll('.card-item');
+
+        cards.forEach((card) => {
+            console.log(card);
+            const title = card.querySelector('h2').innerHTML.toLowerCase();
+            const description = card.querySelector('h4').innerHTML.toLowerCase();
+            if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                card.style.display = 'block'; // Tampilkan card yang sesuai dengan kriteria pencarian
+            } else {
+                card.style.display = 'none'; // Sembunyikan card yang tidak sesuai
+            }
+  });
+}
+
+</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 </body>
 
 </html>
