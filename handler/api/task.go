@@ -19,6 +19,7 @@ type TaskAPI interface {
 
 	MarkTask(w http.ResponseWriter, r *http.Request)
 	UnMarkTask(w http.ResponseWriter, r *http.Request)
+	Reminder(w http.ResponseWriter, r *http.Request)
 }
 
 type taskAPI struct {
@@ -53,6 +54,22 @@ func (t *taskAPI) UnMarkTask(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+}
+
+func (t *taskAPI) Reminder(w http.ResponseWriter, r *http.Request) {
+	taskId := r.URL.Query().Get("task_id")
+
+	err := t.taskService.Reminder(r.Context(), taskId)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(entity.NewErrorResponse("internal server error"))
+		return
+	}
+
+	w.WriteHeader(200)
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"message": "success update reminder",
+	})
 }
 
 func (t *taskAPI) GetTask(w http.ResponseWriter, r *http.Request) {

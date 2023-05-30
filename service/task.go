@@ -5,6 +5,7 @@ import (
 	"a21hc3NpZ25tZW50/repository"
 	"context"
 	"strconv"
+	"time"
 )
 
 type TaskService interface {
@@ -17,6 +18,7 @@ type TaskService interface {
 
 	MarkTask(ctx context.Context, id string) error
 	UnMarkTask(ctx context.Context, id string) error
+	Reminder(ctx context.Context, id string) error
 }
 
 type taskService struct {
@@ -36,6 +38,11 @@ func (s *taskService) MarkTask(ctx context.Context, id string) error {
 func (s *taskService) UnMarkTask(ctx context.Context, id string) error {
 	idn, _ := strconv.Atoi(id)
 	return s.taskRepo.UpdateMarkTask(ctx, map[string]interface{}{"completed": false, "ID": idn})
+}
+
+func (s *taskService) Reminder(ctx context.Context, id string) error {
+	idn, _ := strconv.Atoi(id)
+	return s.taskRepo.UpdateMarkTask(ctx, map[string]interface{}{"reminder": time.Time{}, "ID": idn})
 }
 
 func (s *taskService) GetTasks(ctx context.Context, id int) ([]entity.Task, error) {
