@@ -4,14 +4,28 @@
     {{template "general/header"}}
     
 </head>
-<body class="bg-green-700">
+<body class="bg-[#87CBB9]">
     <!-- TODO: answer here -->
     <center>
-        <div class="bg-white container mx-auto flex px-10 py-10 mt-10 md:flex-row flex-col items-center rounded-2xl max-w-3xl">
+        <div class="bg-white container mx-auto flex grid grid-cols-2 px-10 py-10 mt-10 md:flex-row flex-col items-center rounded-2xl max-w-3xl">
+            <!-- jika message tidak sama dengan "" -->
+            {{if ne .Message ""}}
+            <div id="alert-2" class="col-span-2 flex p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                <span class="sr-only">Info</span>
+                <div class="ml-3 text-sm font-medium">
+                    {{.Message}}
+                </div>
+                <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-2" aria-label="Close">
+                <span class="sr-only">Close</span>
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
+            </div>
+            {{end}}
             <div class="lg:flex-grow  flex-col md:items-start md:text-left mb-16 items-center w-2xl"> 
                 <center>
                 <a href="index.html">
-                    <span class="text-center text-3xl font-bold whitespace-nowrap text-green-700">Kanban</span>
+                    <span class="text-center text-3xl font-bold whitespace-nowrap text-[#245953]">Kanban</span>
                 </a>
                 </center>
                 <h1 class="text-xl font-bold mt-5 tracking-tight text-gray-900">Register</h1>
@@ -19,7 +33,6 @@
                 <form class="mt-5 space-y-6" action="/register/process" method="POST">
                     <div class="rounded-md shadow-sm space-y-px">
                         <div class="">
-                            {{.Message}}
                             <label for="fullname" class="font-medium">Fullname</label>
                             <input id="fullname" name="fullname" type="fullname" autocomplete="fullname" required class="w-full rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm" placeholder="Type fullname here">
                         </div>
@@ -33,25 +46,23 @@
                         </div>
                     </div> 
                     <div>
-                    <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-green-600 py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-[#245953] py-2 px-4 text-sm font-medium text-white hover:bg-[#87CBB9] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         Register
                     </button>
                     </div>
                     <div>
                         <div class="text-sm text-center">
-                            <a href="/login" class="font-medium text-green-600 hover:text-green-500">Have Any Account? Log in Now!</a>
+                            <a href="/login" class="font-medium text-[#245953] hover:text-[#87CBB9]">Have Any Account? Log in Now!</a>
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="lg:max-w-md md:w-1/2 w-4/5">
-                <left>
-                
-                </left>
+            <div class="">
                 <img class="object-cover object-center rounded" alt="mobile-log" src="https://ik.imagekit.io/c3h30jzgh/2.png?ik-sdk-version=javascript-1.4.3&updatedAt=1671172173265">
             </div>
         </div>
         
       </center>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 </body>
 </html>
