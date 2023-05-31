@@ -139,7 +139,13 @@
 
                         <hr class="bg-green-700">
                         <h4 class="mt-3 text-sm font-medium">{{$t.Description}}</h4>
-                        <!-- <h2 class="bg-gray-200 rounded-lg text-lg font-medium">{{$t.Reminder}}</h2> -->
+
+                        <div class="bg-gray-200 mt-3 rounded-lg flex flex-between items-center justify-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                              </svg>
+                            <h2 class=" text-sm font-medium">{{$t.Reminder}}</h2>
+                        </div>
                         <input type="hidden" class="reminder" value="{{$t.Title}}"
                             data-time="{{CorrectTime $t.Reminder}}" data-isView="false"
                             data-isComplete="{{$t.Completed}}" data-id="{{$t.ID}}">
@@ -147,18 +153,18 @@
 
 
                         <div class="flex justify-center items-center h-10 px-2 rounded-b-2xl">
-                            <a href="/task/update?task_id={{$t.ID}}">
-                                <button
-                                    class="flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
-                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" fill="none">
-                                        <path
-                                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                    </svg>
+                            <!-- <a href="/task/update?task_id={{$t.ID}}"> -->
+                                <button data-id="{{$t.ID}}" data-modal-target="UpdateTask-modal" data-modal-toggle="UpdateTask-modal"
+                                        class="UpdateTask flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
+                                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" fill="none">
+                                            <path
+                                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                        </svg>
                                 </button>
-                            </a>
-                            <a href="/task/update/reminder?task_id={{$t.ID}}">
-                                <button
-                                    class=" flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
+                            <!-- </a> -->
+                            <!-- <a href="/task/update/reminder?task_id={{$t.ID}}"> -->
+                                <button data-id="{{$t.ID}}" data-modal-target="AddReminderTask-modal" data-modal-toggle="AddReminderTask-modal"
+                                        class="AddReminderTask flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
                                     <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                         <path
@@ -166,7 +172,7 @@
                                         </path>
                                     </svg>
                                 </button>
-                            </a>
+                            <!-- </a> -->
                             {{if $t.Completed}}
                             <a href="/api/v1/task/unmark?task_id={{$t.ID}}"
                                 class="flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">X</a>
@@ -245,7 +251,7 @@
                                 <label for="title" class="font-medium">Title</label>
                                 <input id="title" name="type" type="text"
                                     class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm"
-                                    placeholder="Type category here">
+                                    placeholder="Type category here" required>
                             </div>
                         </div>
                         <div>
@@ -279,9 +285,8 @@
         });
 
     </script>
-
     <div id="AddTask-modal" tabindex="-1" aria-hidden="true"
-        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-md max-h-full">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -304,13 +309,13 @@
                                 <label for="title" class="font-medium">Title</label>
                                 <input id="title" name="title" type="text"
                                     class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm"
-                                    placeholder="Type title here">
+                                    placeholder="Type title here" required>
                             </div>
                             <div class="mb-3">
                                 <label for="description" class="font-medium">Description</label>
                                 <input id="description" name="description" type="text"
                                     class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm"
-                                    placeholder="Type description here">
+                                    placeholder="Type description here" required>
                             </div>
                         </div>
                         <div>
@@ -325,6 +330,111 @@
             </div>
         </div>
     </div>
+
+    <!-- Update Task modal -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const openModalButtons = document.querySelectorAll('.UpdateTask');
+    
+    openModalButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+        const id = button.getAttribute('data-id');
+        // Mengganti konten modal dengan data yang sesuai menggunakan ID
+        //   document.getElementById('modal-content').textContent = 'Data dengan ID ' + id;
+        // Membuka modal dengan menambahkan kelas "modal-open" ke elemen modal
+        document.getElementById('UpdateTask-modal').classList.add('modal-open');
+        console.log(id);
+            document.getElementById('UpdateTaskForm').action = "/task/update/process?task_id=" + id;
+        });
+    });
+    });
+    </script>
+    <div id="UpdateTask-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-md max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="UpdateTask-modal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <span class="sr-only">Back</span>
+                </button>
+                <div class="px-6 py-6 lg:px-8">
+                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Update Task</h3>
+                    <form class="mt-5 space-y-6" action="" method="POST" id="UpdateTaskForm">
+                        <div class="rounded-md shadow-sm space-y-px">
+                            
+                                <div class="mb-3">
+                                    <label for="title" class="font-medium">Title</label>
+                                    <input id="title" name="title" type="text" value="" required class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="font-medium">Description</label>
+                                    <input id="description" name="description" type="text" value="" required class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm" placeholder="Type description here">
+                                </div>
+                             
+                        </div>  
+                        <div>
+                            <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-[#245953] py-2 px-4 text-sm font-medium text-white hover:bg-[#87CBB9] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Update Task
+                        </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <!-- Add Reminder -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const openModalButtons = document.querySelectorAll('.AddReminderTask');
+
+            openModalButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    const id = button.getAttribute('data-id');
+                    // Mengganti konten modal dengan data yang sesuai menggunakan ID
+                    //   document.getElementById('modal-content').textContent = 'Data dengan ID ' + id;
+                    // Membuka modal dengan menambahkan kelas "modal-open" ke elemen modal
+                    document.getElementById('AddReminderTask-modal').classList.add('modal-open');
+                    console.log(id);
+                    document.getElementById('AddReminderTaskForm').action = "/task/update/reminder/process?task_id=" + id;
+                });
+            });
+        });
+    
+    </script>
+    <div id="AddReminderTask-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-md max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="AddReminderTask-modal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <span class="sr-only">Back</span>
+                </button>
+                <div class="px-6 py-6 lg:px-8">
+                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Update Task</h3>
+                    <form class="mt-5 space-y-6" action="" method="POST" id="AddReminderTaskForm">
+                        <div class="rounded-md shadow-sm space-y-px">
+                            
+                            <div class="mb-3">
+                                <label for="date" class="font-medium">Date</label>
+                                <input id="reminder" name="reminder" type="datetime-local" value="" required
+                                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm">
+                            </div>
+                             
+                        </div>  
+                        <div>
+                            <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent  py-2 px-4 text-sm font-medium text-white bg-[#245953] hover:bg-[#87CBB9] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Update Task
+                        </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> 
+
 
     <!-- Log out verification modal -->
     <div id="logoutVerif-modal" tabindex="-1"
@@ -352,7 +462,7 @@
                         logout?</h3>
                     <a href="/logout">
                         <button data-modal-hide="logoutVerif-modal" type="button"
-                            class="text-white bg-[#2b3d25] hover:bg-[#abb390] focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                            class="text-white bg-[#245953] hover:bg-[#87CBB9] focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                             Yes, I'm sure
                         </button>
                     </a>
