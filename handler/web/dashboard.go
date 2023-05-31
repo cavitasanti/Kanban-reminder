@@ -56,6 +56,9 @@ func (d *dashboardWeb) Dashboard(w http.ResponseWriter, r *http.Request) {
 				t.Year(), t.Month(), t.Day(),
 				t.Hour(), t.Minute(), t.Second())
 		},
+		"Reminder": func(t time.Time) bool {
+			return !t.IsZero()
+		},
 	}
 
 	// ignore this

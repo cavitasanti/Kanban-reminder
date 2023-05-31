@@ -104,6 +104,7 @@ func RunServer(db *gorm.DB, mux *http.ServeMux) *http.ServeMux {
 	// endpoint api
 	MuxRoute(mux, "GET", "/api/v1/task/mark", middleware.Get(middleware.Auth(http.HandlerFunc(apiHandler.TaskAPIHandler.MarkTask))), "?task_id=")
 	MuxRoute(mux, "GET", "/api/v1/task/unmark", middleware.Get(middleware.Auth(http.HandlerFunc(apiHandler.TaskAPIHandler.UnMarkTask))), "?task_id=")
+	MuxRoute(mux, "POST", "/api/v1/task/reminder", middleware.Post(middleware.Auth(http.HandlerFunc(apiHandler.TaskAPIHandler.Reminder))), "?task_id=")
 
 	MuxRoute(mux, "GET", "/api/v1/categories/get", middleware.Get(middleware.Auth(http.HandlerFunc(apiHandler.CategoryAPIHandler.GetCategory))))
 	MuxRoute(mux, "GET", "/api/v1/categories/dashboard", middleware.Get(middleware.Auth(http.HandlerFunc(apiHandler.CategoryAPIHandler.GetCategoryWithTasks))))
