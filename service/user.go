@@ -11,6 +11,8 @@ import (
 type UserService interface {
 	Login(ctx context.Context, user *entity.User) (id int, err error)
 	Register(ctx context.Context, user *entity.User) (entity.User, error)
+	GetUser(ctx context.Context, id int) (entity.User, error)
+	UpdateUser(ctx context.Context, user *entity.User) (entity.User, error)
 
 	Delete(ctx context.Context, id int) error
 }
@@ -22,6 +24,18 @@ type userService struct {
 
 func NewUserService(userRepository repository.UserRepository, categoryRepo repository.CategoryRepository) UserService {
 	return &userService{userRepository, categoryRepo}
+}
+
+func (s *userService) GetUser(ctx context.Context, id int) (entity.User, error) {
+	return s.userRepository.GetUserByID(ctx, id)
+}
+
+func (s *userService) UpdateUser(ctx context.Context, user *entity.User) (entity.User, error) {
+	err := s.userRepository.UpdateUser(ctx, user)
+	if err != nil {
+		return entity.User{}, err
+	}
+	return *user, nil
 }
 
 func (s *userService) Login(ctx context.Context, user *entity.User) (id int, err error) {

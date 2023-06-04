@@ -21,3 +21,10 @@ type UserRegister struct {
 	Email    string `json:"email" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
+
+type UserRequest struct {
+	ID       int    `json:"id"`
+	Fullname string `json:"fullname" binding:"required"`
+	Email    string `json:"email" binding:"required"`
+	Password string `json:"password"`
+}

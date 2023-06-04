@@ -11,7 +11,7 @@ type UserRepository interface {
 	GetUserByID(ctx context.Context, id int) (entity.User, error)
 	GetUserByEmail(ctx context.Context, email string) (entity.User, error)
 	CreateUser(ctx context.Context, user entity.User) (entity.User, error)
-	UpdateUser(ctx context.Context, user entity.User) (entity.User, error)
+	UpdateUser(ctx context.Context, user *entity.User) error
 	DeleteUser(ctx context.Context, id int) error
 }
 
@@ -55,13 +55,13 @@ func (r *userRepository) CreateUser(ctx context.Context, user entity.User) (enti
 	return user, nil
 }
 
-func (r *userRepository) UpdateUser(ctx context.Context, user entity.User) (entity.User, error) {
+func (r *userRepository) UpdateUser(ctx context.Context, user *entity.User) error {
 	// return entity.User{}, nil // TODO: replace this
 	err := r.db.WithContext(ctx).Table("users").Where("id = ?", user.ID).Updates(&user).Error
 	if err != nil {
-		return entity.User{}, err
+		return err
 	}
-	return user, nil
+	return nil
 }
 
 func (r *userRepository) DeleteUser(ctx context.Context, id int) error {

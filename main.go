@@ -94,6 +94,8 @@ func RunServer(db *gorm.DB, mux *http.ServeMux) *http.ServeMux {
 	MuxRoute(mux, "POST", "/api/v1/users/register", middleware.Post(http.HandlerFunc(apiHandler.UserAPIHandler.Register)))
 	MuxRoute(mux, "POST", "/api/v1/users/logout", middleware.Post(http.HandlerFunc(apiHandler.UserAPIHandler.Logout)))
 	MuxRoute(mux, "DELETE", "/api/v1/users/delete", middleware.Delete(http.HandlerFunc(apiHandler.UserAPIHandler.Delete)), "?user_id=")
+	MuxRoute(mux, "GET", "/api/v1/users/get", middleware.Get(middleware.Auth(http.HandlerFunc(apiHandler.UserAPIHandler.GetUser))))
+	MuxRoute(mux, "PUT", "/api/v1/users/update", middleware.Put(middleware.Auth(http.HandlerFunc(apiHandler.UserAPIHandler.UpdateUser))))
 
 	MuxRoute(mux, "GET", "/api/v1/tasks/get", middleware.Get(middleware.Auth(http.HandlerFunc(apiHandler.TaskAPIHandler.GetTask))), "?task_id=")
 	MuxRoute(mux, "POST", "/api/v1/tasks/create", middleware.Post(middleware.Auth(http.HandlerFunc(apiHandler.TaskAPIHandler.CreateNewTask))))
@@ -120,8 +122,8 @@ func RunClient(mux *http.ServeMux, embed embed.FS) *http.ServeMux {
 	taskClient := client.NewTaskClient()
 
 	authWeb := web.NewAuthWeb(userClient, embed)
-	dashboardWeb := web.NewDashboardWeb(categoryClient, embed)
-	modifyWeb := web.NewModifyWeb(taskClient, categoryClient, embed)
+	dashboardWeb := web.NewDashboardWeb(userClient, categoryClient, embed)
+	modifyWeb := web.NewModifyWeb(userClient, taskClient, categoryClient, embed)
 	homeWeb := web.NewHomeWeb(embed)
 
 	client := ClientHandler{
@@ -137,6 +139,7 @@ func RunClient(mux *http.ServeMux, embed embed.FS) *http.ServeMux {
 	mux.HandleFunc("/logout", client.AuthWeb.Logout)
 
 	mux.Handle("/dashboard", middleware.Auth(http.HandlerFunc(client.DashboardWeb.Dashboard)))
+	mux.Handle("/user/update/process", middleware.Auth(http.HandlerFunc(client.ModifyWeb.UpdateUserProcess)))
 
 	mux.Handle("/category/add", middleware.Auth(http.HandlerFunc(client.ModifyWeb.AddCategory)))
 	mux.Handle("/category/create", middleware.Auth(http.HandlerFunc(client.ModifyWeb.AddCategoryProcess)))

@@ -16,12 +16,13 @@ type DashboardWeb interface {
 }
 
 type dashboardWeb struct {
+	userClient     client.UserClient
 	categoryClient client.CategoryClient
 	embed          embed.FS
 }
 
-func NewDashboardWeb(catClient client.CategoryClient, embed embed.FS) *dashboardWeb {
-	return &dashboardWeb{catClient, embed}
+func NewDashboardWeb(userClient client.UserClient, catClient client.CategoryClient, embed embed.FS) *dashboardWeb {
+	return &dashboardWeb{userClient, catClient, embed}
 }
 
 func (d *dashboardWeb) Dashboard(w http.ResponseWriter, r *http.Request) {
@@ -33,6 +34,8 @@ func (d *dashboardWeb) Dashboard(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	user, _ := d.userClient.GetUser(userId.(string))
 
 	var dataTemplate = map[string]interface{}{
 		"categories": categories,
@@ -58,6 +61,14 @@ func (d *dashboardWeb) Dashboard(w http.ResponseWriter, r *http.Request) {
 		},
 		"Reminder": func(t time.Time) bool {
 			return !t.IsZero()
+		},
+
+		"GetFullname": func() string {
+			return user.Fullname
+		},
+
+		"GetEmail": func() string {
+			return user.Email
 		},
 	}
 

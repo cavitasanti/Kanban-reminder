@@ -9,6 +9,8 @@ import (
 )
 
 type ModifyWeb interface {
+	UpdateUserProcess(w http.ResponseWriter, r *http.Request)
+
 	AddTask(w http.ResponseWriter, r *http.Request)
 	AddTaskProcess(w http.ResponseWriter, r *http.Request)
 	AddCategory(w http.ResponseWriter, r *http.Request)
@@ -25,13 +27,32 @@ type ModifyWeb interface {
 }
 
 type modifyWeb struct {
+	userClient     client.UserClient
 	taskClient     client.TaskClient
 	categoryClient client.CategoryClient
 	embed          embed.FS
 }
 
-func NewModifyWeb(tC client.TaskClient, cC client.CategoryClient, embed embed.FS) *modifyWeb {
-	return &modifyWeb{tC, cC, embed}
+func NewModifyWeb(uC client.UserClient, tC client.TaskClient, cC client.CategoryClient, embed embed.FS) *modifyWeb {
+	return &modifyWeb{uC, tC, cC, embed}
+}
+
+func (a *modifyWeb) UpdateUserProcess(w http.ResponseWriter, r *http.Request) {
+	userId := r.Context().Value("id")
+
+	fullname := r.FormValue("fullname")
+
+	respCode, err := a.userClient.UpdateUser(userId.(string), fullname)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if respCode == 200 {
+		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+	} else {
+		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+	}
 }
 
 func (a *modifyWeb) AddTask(w http.ResponseWriter, r *http.Request) {
