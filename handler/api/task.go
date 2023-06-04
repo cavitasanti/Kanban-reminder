@@ -223,9 +223,12 @@ func (t *taskAPI) UpdateTask(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(200)
 	json.NewEncoder(w).Encode(map[string]interface{}{
-		"user_id": idLogin,
-		"task_id": tsk.ID,
-		"message": "success update task",
+		"user_id":     idLogin,
+		"task_id":     tsk.ID,
+		"title":       tsk.Title,
+		"description": tsk.Description,
+		"category_id": tsk.CategoryID,
+		"message":     "success update task",
 	})
 }
 
@@ -247,7 +250,8 @@ func (t *taskAPI) UpdateTaskReminder(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("invalid user id"))
 	}
-	rmdr, err := t.taskService.UpdateTask(r.Context(), &entity.Task{
+	log.Print(task)
+	rmdr, err := t.taskService.UpdateTaskReminder(r.Context(), &entity.Task{
 		ID:         task.ID,
 		Reminder:   task.Reminder,
 		CategoryID: task.CategoryID,

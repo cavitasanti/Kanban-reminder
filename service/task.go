@@ -4,6 +4,7 @@ import (
 	"a21hc3NpZ25tZW50/entity"
 	"a21hc3NpZ25tZW50/repository"
 	"context"
+	"log"
 	"strconv"
 	"time"
 )
@@ -91,6 +92,7 @@ func (s *taskService) UpdateTaskReminder(ctx context.Context, task *entity.Task)
 			return entity.Task{}, err
 		}
 	}
+	log.Print(task)
 	err := s.taskRepo.UpdateTaskReminder(ctx, task)
 	if err != nil {
 		return entity.Task{}, err

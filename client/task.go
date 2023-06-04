@@ -153,7 +153,7 @@ func (t *taskClient) UpdateTaskReminder(id, reminder, userID string) (respCode i
 		return -1, err
 	}
 
-	req, err := http.NewRequest("PUT", config.SetUrl("/api/v1/tasks/update?task_id="+id), bytes.NewBuffer(b))
+	req, err := http.NewRequest("POST", config.SetUrl("/api/v1/task/reminder?task_id="+id), bytes.NewBuffer(b))
 	if err != nil {
 		return -1, err
 	}
