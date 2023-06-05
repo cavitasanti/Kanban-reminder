@@ -19,6 +19,9 @@ type ModifyWeb interface {
 	UpdateTask(w http.ResponseWriter, r *http.Request)
 	UpdateTaskProcess(w http.ResponseWriter, r *http.Request)
 
+	MarkTask(w http.ResponseWriter, r *http.Request)
+	UnMarkTask(w http.ResponseWriter, r *http.Request)
+
 	UpdateTaskReminder(w http.ResponseWriter, r *http.Request)
 	UpdateTaskReminderProcess(w http.ResponseWriter, r *http.Request)
 
@@ -52,6 +55,38 @@ func (a *modifyWeb) UpdateUserProcess(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 	} else {
 		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+	}
+}
+
+func (a *modifyWeb) MarkTask(w http.ResponseWriter, r *http.Request) {
+	taskId := r.URL.Query().Get("task_id")
+
+	respCode, err := a.taskClient.MarkTask(taskId, r.Context().Value("id").(string))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	_ = respCode
+
+	if respCode == 200 {
+		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+	}
+	// http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+}
+
+func (a *modifyWeb) UnMarkTask(w http.ResponseWriter, r *http.Request) {
+	taskId := r.URL.Query().Get("task_id")
+	respCode, err := a.taskClient.MarkTask(taskId, r.Context().Value("id").(string))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if respCode == http.StatusOK {
+		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+	} else {
+		// Tangani situasi di mana respCode tidak sesuai dengan harapan Anda
+		http.Error(w, "Unexpected response code", http.StatusInternalServerError)
 	}
 }
 

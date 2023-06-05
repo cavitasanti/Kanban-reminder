@@ -31,14 +31,17 @@ func NewTaskAPI(taskService service.TaskService) *taskAPI {
 
 func (t *taskAPI) MarkTask(w http.ResponseWriter, r *http.Request) {
 	taskId := r.URL.Query().Get("task_id")
-
 	err := t.taskService.MarkTask(r.Context(), taskId)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("internal server error"))
 		return
 	}
-
+	w.WriteHeader(http.StatusOK)
+	// json.NewEncoder(w).Encode(map[string]interface{}{
+	// 	"task_id": taskId,
+	// 	"message": "success mark task",
+	// })
 	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 }
 
@@ -51,7 +54,11 @@ func (t *taskAPI) UnMarkTask(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("internal server error"))
 		return
 	}
-
+	w.WriteHeader(http.StatusOK)
+	// json.NewEncoder(w).Encode(map[string]interface{}{
+	// 	"task_id": taskId,
+	// 	"message": "success unmark task",
+	// })
 	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 }
 

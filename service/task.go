@@ -31,11 +31,21 @@ func NewTaskService(taskRepo repository.TaskRepository, categoryRepo repository.
 func (s *taskService) MarkTask(ctx context.Context, id string) error {
 	idn, _ := strconv.Atoi(id)
 	return s.taskRepo.UpdateMarkTask(ctx, map[string]interface{}{"completed": true, "ID": idn})
+	// err := s.taskRepo.UpdateMarkTask(ctx, map[string]interface{}{"completed": true, "ID": idn})
+	// if err != nil {
+	// 	return err
+	// }
+	// return nil
 }
 
 func (s *taskService) UnMarkTask(ctx context.Context, id string) error {
 	idn, _ := strconv.Atoi(id)
 	return s.taskRepo.UpdateMarkTask(ctx, map[string]interface{}{"completed": false, "ID": idn})
+	// err := s.taskRepo.UpdateMarkTask(ctx, map[string]interface{}{"completed": false, "ID": idn})
+	// if err != nil {
+	// 	return err
+	// }
+	// return nil
 }
 
 func (s *taskService) GetTasks(ctx context.Context, id int) ([]entity.Task, error) {
