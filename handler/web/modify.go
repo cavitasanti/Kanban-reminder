@@ -76,17 +76,15 @@ func (a *modifyWeb) MarkTask(w http.ResponseWriter, r *http.Request) {
 
 func (a *modifyWeb) UnMarkTask(w http.ResponseWriter, r *http.Request) {
 	taskId := r.URL.Query().Get("task_id")
-	respCode, err := a.taskClient.MarkTask(taskId, r.Context().Value("id").(string))
+	respCode, err := a.taskClient.UnMarkTask(taskId, r.Context().Value("id").(string))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	_ = respCode
 
-	if respCode == http.StatusOK {
+	if respCode == 200 {
 		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
-	} else {
-		// Tangani situasi di mana respCode tidak sesuai dengan harapan Anda
-		http.Error(w, "Unexpected response code", http.StatusInternalServerError)
 	}
 }
 

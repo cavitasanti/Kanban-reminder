@@ -236,10 +236,10 @@
                             </button>
                             <!-- </a> -->
                             {{if $t.Completed}}
-                            <a href="/api/v1/task/unmark?task_id={{$t.ID}}"
+                            <a href="/task/unmark?task_id={{$t.ID}}"
                                 class="flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">X</a>
                             {{else}}
-                            <a href="/api/v1/task/mark?task_id={{$t.ID}}"
+                            <a href="/task/mark?task_id={{$t.ID}}"
                                 class="flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">V</a>
                             {{end}}
                             <form method="POST" action="/task/delete?task_id={{$t.ID}}">

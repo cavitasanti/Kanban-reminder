@@ -37,12 +37,12 @@ func (t *taskAPI) MarkTask(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("internal server error"))
 		return
 	}
+	// http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 	w.WriteHeader(http.StatusOK)
-	// json.NewEncoder(w).Encode(map[string]interface{}{
-	// 	"task_id": taskId,
-	// 	"message": "success mark task",
-	// })
-	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"task_id": taskId,
+		"message": "success mark task",
+	})
 }
 
 func (t *taskAPI) UnMarkTask(w http.ResponseWriter, r *http.Request) {
@@ -54,12 +54,12 @@ func (t *taskAPI) UnMarkTask(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("internal server error"))
 		return
 	}
+	// http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 	w.WriteHeader(http.StatusOK)
-	// json.NewEncoder(w).Encode(map[string]interface{}{
-	// 	"task_id": taskId,
-	// 	"message": "success unmark task",
-	// })
-	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"task_id": taskId,
+		"message": "success unmark task",
+	})
 }
 
 func (t *taskAPI) Reminder(w http.ResponseWriter, r *http.Request) {

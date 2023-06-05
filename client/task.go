@@ -5,6 +5,7 @@ import (
 	"a21hc3NpZ25tZW50/entity"
 	"bytes"
 	"encoding/json"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -33,15 +34,17 @@ func (t *taskClient) MarkTask(id, userID string) (respCode int, err error) {
 	if err != nil {
 		return -1, err
 	}
-	req, err := http.NewRequest("PUT", config.SetUrl("/api/v1/tasks/mark?task_id="+id), nil)
+	req, err := http.NewRequest("GET", config.SetUrl("/api/v1/task/mark?task_id="+id), nil)
 	if err != nil {
 		return -1, err
 	}
+
 	req.Header.Set("Content-Type", "application/json")
 	resp, err := client.Do(req)
 	if err != nil {
 		return -1, err
 	}
+	log.Print(resp.StatusCode)
 	defer resp.Body.Close()
 	return resp.StatusCode, nil
 }
@@ -51,7 +54,7 @@ func (t *taskClient) UnMarkTask(id, userID string) (respCode int, err error) {
 	if err != nil {
 		return -1, err
 	}
-	req, err := http.NewRequest("PUT", config.SetUrl("/api/v1/tasks/unmark?task_id="+id), nil)
+	req, err := http.NewRequest("GET", config.SetUrl("/api/v1/task/unmark?task_id="+id), nil)
 	if err != nil {
 		return -1, err
 	}
