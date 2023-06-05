@@ -5,6 +5,7 @@ import (
 	"a21hc3NpZ25tZW50/entity"
 	"bytes"
 	"encoding/json"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -15,6 +16,8 @@ type TaskClient interface {
 	UpdateTask(id, title, description, userID string) (respCode int, err error)
 	UpdateTaskReminder(id, reminder, userID string) (respCode int, err error)
 	UpdateCategoryTask(id, catId, userID string) (respCode int, err error)
+	MarkTask(id, userID string) (respCode int, err error)
+	UnMarkTask(id, userID string) (respCode int, err error)
 	GetTaskByCategory(id, userID string) ([]entity.Task, error)
 	DeleteTask(id, userID string) (respCode int, err error)
 }
@@ -24,6 +27,44 @@ type taskClient struct {
 
 func NewTaskClient() *taskClient {
 	return &taskClient{}
+}
+
+func (t *taskClient) MarkTask(id, userID string) (respCode int, err error) {
+	client, err := GetClientWithCookie(userID)
+	if err != nil {
+		return -1, err
+	}
+	req, err := http.NewRequest("GET", config.SetUrl("/api/v1/task/mark?task_id="+id), nil)
+	if err != nil {
+		return -1, err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := client.Do(req)
+	if err != nil {
+		return -1, err
+	}
+	log.Print(resp.StatusCode)
+	defer resp.Body.Close()
+	return resp.StatusCode, nil
+}
+
+func (t *taskClient) UnMarkTask(id, userID string) (respCode int, err error) {
+	client, err := GetClientWithCookie(userID)
+	if err != nil {
+		return -1, err
+	}
+	req, err := http.NewRequest("GET", config.SetUrl("/api/v1/task/unmark?task_id="+id), nil)
+	if err != nil {
+		return -1, err
+	}
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := client.Do(req)
+	if err != nil {
+		return -1, err
+	}
+	defer resp.Body.Close()
+	return resp.StatusCode, nil
 }
 
 func (t *taskClient) CreateTask(title, description, category, userID string) (respCode int, err error) {
@@ -153,7 +194,7 @@ func (t *taskClient) UpdateTaskReminder(id, reminder, userID string) (respCode i
 		return -1, err
 	}
 
-	req, err := http.NewRequest("PUT", config.SetUrl("/api/v1/tasks/update?task_id="+id), bytes.NewBuffer(b))
+	req, err := http.NewRequest("POST", config.SetUrl("/api/v1/task/reminder?task_id="+id), bytes.NewBuffer(b))
 	if err != nil {
 		return -1, err
 	}

@@ -4,7 +4,6 @@ import (
 	"a21hc3NpZ25tZW50/client"
 	"embed"
 	"fmt"
-	"log"
 	"net/http"
 	"path"
 	"text/template"
@@ -78,7 +77,6 @@ func (a *authWeb) LoginProcess(w http.ResponseWriter, r *http.Request) {
 			"Message": err.Error(),
 		}
 
-		log.Print(err.Error())
 		err = t.Execute(w, data)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -141,7 +139,6 @@ func (a *authWeb) RegisterProcess(w http.ResponseWriter, r *http.Request) {
 			"Message": err.Error(),
 		}
 
-		log.Print(err.Error())
 		err = t.Execute(w, data)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)

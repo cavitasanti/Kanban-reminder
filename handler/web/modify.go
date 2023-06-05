@@ -19,6 +19,9 @@ type ModifyWeb interface {
 	UpdateTask(w http.ResponseWriter, r *http.Request)
 	UpdateTaskProcess(w http.ResponseWriter, r *http.Request)
 
+	MarkTask(w http.ResponseWriter, r *http.Request)
+	UnMarkTask(w http.ResponseWriter, r *http.Request)
+
 	UpdateTaskReminder(w http.ResponseWriter, r *http.Request)
 	UpdateTaskReminderProcess(w http.ResponseWriter, r *http.Request)
 
@@ -51,6 +54,36 @@ func (a *modifyWeb) UpdateUserProcess(w http.ResponseWriter, r *http.Request) {
 	if respCode == 200 {
 		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 	} else {
+		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+	}
+}
+
+func (a *modifyWeb) MarkTask(w http.ResponseWriter, r *http.Request) {
+	taskId := r.URL.Query().Get("task_id")
+
+	respCode, err := a.taskClient.MarkTask(taskId, r.Context().Value("id").(string))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	_ = respCode
+
+	if respCode == 200 {
+		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+	}
+	// http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+}
+
+func (a *modifyWeb) UnMarkTask(w http.ResponseWriter, r *http.Request) {
+	taskId := r.URL.Query().Get("task_id")
+	respCode, err := a.taskClient.UnMarkTask(taskId, r.Context().Value("id").(string))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	_ = respCode
+
+	if respCode == 200 {
 		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 	}
 }
@@ -254,7 +287,7 @@ func (a *modifyWeb) UpdateTaskReminderProcess(w http.ResponseWriter, r *http.Req
 		}
 
 		if respCode == 200 {
-			http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+			http.Redirect(w, r, "/dashboard", http.StatusMovedPermanently)
 		} else {
 			http.Redirect(w, r, "/task/update/reminder?task_id="+taskId, http.StatusSeeOther)
 		}

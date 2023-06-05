@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 	"errors"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
@@ -158,7 +157,7 @@ func (u *userClient) UpdateUser(userId, fullname string) (respCode int, err erro
 	if err != nil {
 		return -1, err
 	}
-	log.Print(data)
+
 	req, err := http.NewRequest("PUT", config.SetUrl("/api/v1/users/update"), bytes.NewBuffer(data))
 	if err != nil {
 		return -1, err

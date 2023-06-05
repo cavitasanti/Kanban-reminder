@@ -31,7 +31,7 @@
                                 <input type="text" id="simple-search"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Search" required>
-                                
+
                             </div>
                             <!-- <button type="submit"
                                 class="p-2.5 ml-2 text-sm font-medium text-white border border-transparent bg-[#245953] rounded-lg hover:bg-[#87CBB9] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -44,43 +44,63 @@
                             </button> -->
                         </form>
                         <li>
-                        <!-- {{.User.Fullname}} -->
+                            <!-- {{.User.Fullname}} -->
                             <!-- <button data-modal-target="logoutVerif-modal" data-modal-toggle="logoutVerif-modal"
                                 class="block py-2 pr-4 pl-3 text-lg text-[#245953] hover:text-[#87CBB9] rounded md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 ">Log Out
                             </button> -->
                             <div class="flex items-center md:order-2">
-                                <button type="button" class="flex items-center justify-between w-full py-2 pl-3 text-lg text-[#245953] hover:text-[#87CBB9] rounded md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 " id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-                                  {{GetFullname}}<svg class="w-5 h-5 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                <button type="button"
+                                    class="flex items-center justify-between w-full py-2 pl-3 text-lg text-[#245953] hover:text-[#87CBB9] rounded md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 "
+                                    id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
+                                    data-dropdown-placement="bottom">
+                                    {{GetFullname}}<svg class="w-5 h-5 ml-1" aria-hidden="true" fill="currentColor"
+                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
                                 </button>
                                 <!-- Dropdown menu -->
-                                <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
-                                  <div class="px-4 py-3">
-                                    <span class="block text-sm text-gray-900 ">{{GetFullname}}</span>
-                                    
-                                    <span class="block text-sm  text-gray-500 truncate">{{GetEmail}}</span>
-                                  </div>
-                                  <ul class="py-2" aria-labelledby="user-menu-button">
-                                    <li class="hover:bg-gray-100 dark:hover:bg-gray-600">
-                                      <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Home</a>
-                                    </li>
-                                    <li class="hover:bg-gray-100 dark:hover:bg-gray-600">
-                                      <!-- <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a> -->
-                                      <button data-modal-target="UpdateName-modal" data-modal-toggle="UpdateName-modal"
-                                        class="UpdateName block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                        Profile
-                                        </button>
-                                    </li>
-                                    <li class="hover:bg-gray-100 dark:hover:bg-gray-600">
-                                        <button data-modal-target="logoutVerif-modal" data-modal-toggle="logoutVerif-modal"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 ">Sign out
-                                        </button>
-                                    </li>
-                                  </ul>
+                                <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+                                    id="user-dropdown">
+                                    <div class="px-4 py-3">
+                                        <span class="block text-sm text-gray-900 ">{{GetFullname}}</span>
+
+                                        <span class="block text-sm  text-gray-500 truncate">{{GetEmail}}</span>
+                                    </div>
+                                    <ul class="py-2" aria-labelledby="user-menu-button">
+                                        <li class="hover:bg-gray-100 dark:hover:bg-gray-600">
+                                            <a href="/"
+                                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Home</a>
+                                        </li>
+                                        <li class="hover:bg-gray-100 dark:hover:bg-gray-600">
+                                            <!-- <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a> -->
+                                            <button data-modal-target="UpdateName-modal"
+                                                data-modal-toggle="UpdateName-modal"
+                                                class="UpdateName block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                                Profile
+                                            </button>
+                                        </li>
+                                        <li class="hover:bg-gray-100 dark:hover:bg-gray-600">
+                                            <button data-modal-target="logoutVerif-modal"
+                                                data-modal-toggle="logoutVerif-modal"
+                                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 ">Sign
+                                                out
+                                            </button>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
-                                  <span class="sr-only">Open main menu</span>
-                                  <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-                              </button>
+                                <button data-collapse-toggle="mobile-menu-2" type="button"
+                                    class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                    aria-controls="mobile-menu-2" aria-expanded="false">
+                                    <span class="sr-only">Open main menu</span>
+                                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                </button>
                             </div>
                         </li>
                     </ul>
@@ -177,44 +197,49 @@
 
                         {{if Reminder $t.Reminder}}
                         <div class="bg-gray-200 mt-3 rounded-lg flex flex-between items-center justify-center">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                              </svg>
-                            <h2 class=" text-sm font-medium">{{$t.Reminder}}</h2>
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="1.5"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <h2 class=" text-sm font-medium">{{CorrectTime $t.Reminder }}</h2>
                         </div>
                         {{end}}
                         <input type="hidden" class="reminder" value="{{$t.Title}}"
                             data-time="{{CorrectTime $t.Reminder}}" data-isView="false"
-                            data-isComplete="{{$t.Completed}}" data-id="{{$t.ID}}" data-title="{{$t.Title}}" data-description="{{$t.Description}}">
+                            data-isComplete="{{$t.Completed}}" data-id="{{$t.ID}}" data-title="{{$t.Title}}"
+                            data-description="{{$t.Description}}">
 
 
 
                         <div class="flex justify-center items-center h-10 px-2 rounded-b-2xl">
                             <!-- <a href="/task/update?task_id={{$t.ID}}"> -->
-                                <button data-id="{{$t.ID}}" data-title="{{$t.Title}}" data-description="{{$t.Description}}" data-modal-target="UpdateTask-modal" data-modal-toggle="UpdateTask-modal"
-                                        class="UpdateTask flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
-                                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" fill="none">
-                                            <path
-                                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                        </svg>
-                                </button>
+                            <button data-id="{{$t.ID}}" data-title="{{$t.Title}}" data-description="{{$t.Description}}"
+                                data-modal-target="UpdateTask-modal" data-modal-toggle="UpdateTask-modal"
+                                class="UpdateTask flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                </svg>
+                            </button>
                             <!-- </a> -->
                             <!-- <a href="/task/update/reminder?task_id={{$t.ID}}"> -->
-                                <button data-id="{{$t.ID}}" data-modal-target="AddReminderTask-modal" data-modal-toggle="AddReminderTask-modal"
-                                        class="AddReminderTask flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
-                                    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                        <path
-                                            d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5">
-                                        </path>
-                                    </svg>
-                                </button>
+                            <button data-id="{{$t.ID}}" data-modal-target="AddReminderTask-modal"
+                                data-modal-toggle="AddReminderTask-modal"
+                                class="AddReminderTask flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
+                                <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path
+                                        d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5">
+                                    </path>
+                                </svg>
+                            </button>
                             <!-- </a> -->
                             {{if $t.Completed}}
-                            <a href="/api/v1/task/unmark?task_id={{$t.ID}}"
+                            <a href="/task/unmark?task_id={{$t.ID}}"
                                 class="flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">X</a>
                             {{else}}
-                            <a href="/api/v1/task/mark?task_id={{$t.ID}}"
+                            <a href="/task/mark?task_id={{$t.ID}}"
                                 class="flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">V</a>
                             {{end}}
                             <form method="POST" action="/task/delete?task_id={{$t.ID}}">
@@ -252,11 +277,14 @@
             allTime.forEach(async element => {
                 if (element.getAttribute('data-isView') == 'false' && element.getAttribute('data-isComplete') == 'false') {
                     if ((new Date(element.getAttribute('data-time'))).getTime() < (new Date()).getTime()) {
-                        await fetch('/api/v1/task/reminder?task_id=' + element.getAttribute('data-id'), {
+                        await fetch('/task/update/reminder/process?task_id=' + element.getAttribute('data-id'), {
                             method: "POST"
                         });
+
                         element.setAttribute('data-isView', 'true');
-                        Swal.fire(element.value + ' Jangan lupa yaa :)');
+                        Swal.fire(' Do not miss the ' + element.value).then(
+                            () => location.reload()
+                        );
                     }
                 }
             });
@@ -323,7 +351,7 @@
 
     </script>
     <div id="AddTask-modal" tabindex="-1" aria-hidden="true"
-    class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-md max-h-full">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -370,11 +398,11 @@
 
     <!-- Update Task modal -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const openModalButtons = document.querySelectorAll('.UpdateTask');
-    
-            openModalButtons.forEach(function(button) {
-                button.addEventListener('click', function() {
+
+            openModalButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
                     const id = button.getAttribute('data-id');
                     const mytitle = button.getAttribute('data-title');
                     const mydescription = button.getAttribute('data-description');
@@ -390,44 +418,56 @@
                     document.getElementById('UpdateTaskForm').action = "/task/update/process?task_id=" + id;
                 });
             });
-        }); 
-    
+        });
+
 
     </script>
-    <div id="UpdateTask-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div id="UpdateTask-modal" tabindex="-1" aria-hidden="true"
+        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-md max-h-full">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="UpdateTask-modal">
-                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <button type="button"
+                    class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                    data-modal-hide="UpdateTask-modal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
                     <span class="sr-only">Back</span>
                 </button>
                 <div class="px-6 py-6 lg:px-8">
                     <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Update Task</h3>
                     <form class="mt-5 space-y-6" action="" method="POST" id="UpdateTaskForm">
                         <div class="rounded-md shadow-sm space-y-px">
-                            
-                                <div class="mb-3">
-                                    <label for="title" class="font-medium">Title</label>
-                                    <input id="mytitle" name="title" type="text" value="" required class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="description" class="font-medium">Description</label>
-                                    <input id="mydescription" name="description" type="text" value="" required class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm" placeholder="Type description here">
-                                </div>
-                             
-                        </div>  
+
+                            <div class="mb-3">
+                                <label for="title" class="font-medium">Title</label>
+                                <input id="mytitle" name="title" type="text" value="" required
+                                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm">
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="font-medium">Description</label>
+                                <input id="mydescription" name="description" type="text" value="" required
+                                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm"
+                                    placeholder="Type description here">
+                            </div>
+
+                        </div>
                         <div>
-                            <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-[#245953] py-2 px-4 text-sm font-medium text-white hover:bg-[#87CBB9] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            Update Task
-                        </button>
+                            <button type="submit"
+                                class="group relative flex w-full justify-center rounded-md border border-transparent bg-[#245953] py-2 px-4 text-sm font-medium text-white hover:bg-[#87CBB9] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                Update Task
+                            </button>
                         </div>
 
                     </form>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 
     <!-- Add Reminder -->
     <script>
@@ -446,91 +486,112 @@
                 });
             });
         });
-    
+
     </script>
-    <div id="AddReminderTask-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div id="AddReminderTask-modal" tabindex="-1" aria-hidden="true"
+        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-md max-h-full">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="AddReminderTask-modal">
-                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <button type="button"
+                    class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                    data-modal-hide="AddReminderTask-modal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
                     <span class="sr-only">Back</span>
                 </button>
                 <div class="px-6 py-6 lg:px-8">
                     <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Add Reminder</h3>
                     <form class="mt-5 space-y-6" action="" method="POST" id="AddReminderTaskForm">
                         <div class="rounded-md shadow-sm space-y-px">
-                            
+
                             <div class="mb-3">
                                 <label for="reminder" class="font-medium">Date</label>
                                 <input id="reminder" name="reminder" type="datetime-local" value="" required
                                     class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm">
                             </div>
-                             
-                        </div>  
+
+                        </div>
                         <div>
-                            <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent  py-2 px-4 text-sm font-medium text-white bg-[#245953] hover:bg-[#87CBB9] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            Update Task
-                        </button>
+                            <button type="submit"
+                                class="group relative flex w-full justify-center rounded-md border border-transparent  py-2 px-4 text-sm font-medium text-white bg-[#245953] hover:bg-[#87CBB9] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                Update Task
+                            </button>
                         </div>
 
                     </form>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 
     <!-- Update Name modal -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const openModalButtons = document.querySelectorAll('.UpdatName');
-    
-            openModalButtons.forEach(function(button) {
-                button.addEventListener('click', function() {
+
+            openModalButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
 
                     document.getElementById('UpdatName-modal').classList.add('modal-open');
 
                     document.getElementById('UpdatNameForm').action = "/user/update/process";
                 });
             });
-        }); 
-    
+        });
+
 
     </script>
-    <div id="UpdateName-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div id="UpdateName-modal" tabindex="-1" aria-hidden="true"
+        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-md max-h-full">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="UpdateName-modal">
-                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <button type="button"
+                    class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                    data-modal-hide="UpdateName-modal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
                     <span class="sr-only">Back</span>
                 </button>
                 <div class="px-6 py-6 lg:px-8">
                     <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Update Profile</h3>
                     <form class="mt-5 space-y-6" action="/user/update/process" method="POST" id="UpdateNameForm">
                         <div class="rounded-md shadow-sm space-y-px">
-                            
-                                <div class="mb-3">
-                                    <label for="fullname" class="font-medium">Fullname</label>
-                                    <input name="fullname" type="text" value="{{GetFullname}}" required class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="font-medium">Email</label>
-                                    <input name="email" type="text" value="{{GetEmail}}" disabled class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm" placeholder="Type description here">
-                                </div>
-                             
-                        </div>  
+
+                            <div class="mb-3">
+                                <label for="fullname" class="font-medium">Fullname</label>
+                                <input name="fullname" type="text" value="{{GetFullname}}" required
+                                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="font-medium">Email</label>
+                                <input name="email" type="text" value="{{GetEmail}}" disabled
+                                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 sm:text-sm"
+                                    placeholder="Type description here">
+                            </div>
+
+                        </div>
                         <div>
-                            <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-[#245953] py-2 px-4 text-sm font-medium text-white hover:bg-[#87CBB9] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            Update Profile
-                        </button>
+                            <button type="submit"
+                                class="group relative flex w-full justify-center rounded-md border border-transparent bg-[#245953] py-2 px-4 text-sm font-medium text-white hover:bg-[#87CBB9] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                Update Profile
+                            </button>
                         </div>
 
                     </form>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 
     <!-- Log out verification modal -->
     <div id="logoutVerif-modal" tabindex="-1"
@@ -592,7 +653,7 @@
         }
 
     </script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 </body>
 

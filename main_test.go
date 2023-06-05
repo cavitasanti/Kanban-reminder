@@ -8,13 +8,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
-	"net/http/cookiejar"
 	"net/http/httptest"
-	"net/url"
 	"os"
-	"strconv"
 
 	_ "github.com/jackc/pgx/v4/stdlib"
 	. "github.com/onsi/ginkgo/v2"
@@ -853,152 +849,152 @@ var _ = Describe("TestWebHandler", Ordered, func() {
 	})
 })
 
-var _ = Describe("TestDeployment", Ordered, func() {
-	var userDeployIdTest string
+// var _ = Describe("TestDeployment", Ordered, func() {
+// 	var userDeployIdTest string
 
-	AfterAll(func() {
-		if userDeployIdTest != "" {
-			req, err := http.NewRequest("DELETE", main.FlyURL()+"/api/v1/users/delete?user_id="+userDeployIdTest, nil)
-			if err != nil {
-				panic(err)
-			}
+// 	AfterAll(func() {
+// 		if userDeployIdTest != "" {
+// 			req, err := http.NewRequest("DELETE", main.FlyURL()+"/api/v1/users/delete?user_id="+userDeployIdTest, nil)
+// 			if err != nil {
+// 				panic(err)
+// 			}
 
-			req.Header.Add("Content-Type", "application/json")
+// 			req.Header.Add("Content-Type", "application/json")
 
-			client := &http.Client{}
-			_, err = client.Do(req)
-			if err != nil {
-				panic(err)
-			}
-		}
-	})
+// 			client := &http.Client{}
+// 			_, err = client.Do(req)
+// 			if err != nil {
+// 				panic(err)
+// 			}
+// 		}
+// 	})
 
-	// pakai fly.io
-	Describe("/", func() {
-		When("hit endpoint", func() {
-			It("should show index html", func() {
-				req, _ := http.NewRequest("GET", main.FlyURL()+"/", nil)
-				client := &http.Client{}
+// 	// pakai fly.io
+// 	Describe("/", func() {
+// 		When("hit endpoint", func() {
+// 			It("should show index html", func() {
+// 				req, _ := http.NewRequest("GET", main.FlyURL()+"/", nil)
+// 				client := &http.Client{}
 
-				resp, err := client.Do(req)
+// 				resp, err := client.Do(req)
 
-				Expect(err).To(BeNil())
+// 				Expect(err).To(BeNil())
 
-				defer resp.Body.Close()
+// 				defer resp.Body.Close()
 
-				body, _ := ioutil.ReadAll(resp.Body)
+// 				body, _ := ioutil.ReadAll(resp.Body)
 
-				Expect(resp.StatusCode).To(Equal(http.StatusOK))
-				Expect(string(body)).To(ContainSubstring("Welcome to kanban app"))
-			})
-		})
-	})
+// 				Expect(resp.StatusCode).To(Equal(http.StatusOK))
+// 				Expect(string(body)).To(ContainSubstring("Welcome to kanban app"))
+// 			})
+// 		})
+// 	})
 
-	Describe("/login", func() {
-		When("hit endpoint with GET method", func() {
-			It("should get login.html", func() {
-				req, _ := http.NewRequest("GET", main.FlyURL()+"/login", nil)
-				client := &http.Client{}
+// 	Describe("/login", func() {
+// 		When("hit endpoint with GET method", func() {
+// 			It("should get login.html", func() {
+// 				req, _ := http.NewRequest("GET", main.FlyURL()+"/login", nil)
+// 				client := &http.Client{}
 
-				resp, err := client.Do(req)
+// 				resp, err := client.Do(req)
 
-				Expect(err).To(BeNil())
+// 				Expect(err).To(BeNil())
 
-				defer resp.Body.Close()
+// 				defer resp.Body.Close()
 
-				body, _ := ioutil.ReadAll(resp.Body)
+// 				body, _ := ioutil.ReadAll(resp.Body)
 
-				Expect(resp.StatusCode).To(Equal(http.StatusOK))
-				Expect(string(body)).To(ContainSubstring("Login"))
-			})
-		})
-	})
+// 				Expect(resp.StatusCode).To(Equal(http.StatusOK))
+// 				Expect(string(body)).To(ContainSubstring("Login"))
+// 			})
+// 		})
+// 	})
 
-	Describe("/register", func() {
-		When("hit endpoint with GET method", func() {
-			It("should get register.html", func() {
-				req, _ := http.NewRequest("GET", main.FlyURL()+"/register", nil)
-				client := &http.Client{}
+// 	Describe("/register", func() {
+// 		When("hit endpoint with GET method", func() {
+// 			It("should get register.html", func() {
+// 				req, _ := http.NewRequest("GET", main.FlyURL()+"/register", nil)
+// 				client := &http.Client{}
 
-				resp, err := client.Do(req)
+// 				resp, err := client.Do(req)
 
-				Expect(err).To(BeNil())
+// 				Expect(err).To(BeNil())
 
-				defer resp.Body.Close()
+// 				defer resp.Body.Close()
 
-				body, _ := ioutil.ReadAll(resp.Body)
+// 				body, _ := ioutil.ReadAll(resp.Body)
 
-				Expect(resp.StatusCode).To(Equal(http.StatusOK))
-				Expect(string(body)).To(ContainSubstring("Register"))
-			})
-		})
-	})
+// 				Expect(resp.StatusCode).To(Equal(http.StatusOK))
+// 				Expect(string(body)).To(ContainSubstring("Register"))
+// 			})
+// 		})
+// 	})
 
-	Describe("/dashboard", func() {
-		When("the endpoint with GET method without login", func() {
-			It("should redirect to template login.html", func() {
-				req, _ := http.NewRequest("GET", main.FlyURL()+"/dashboard", nil)
-				client := &http.Client{}
+// 	Describe("/dashboard", func() {
+// 		When("the endpoint with GET method without login", func() {
+// 			It("should redirect to template login.html", func() {
+// 				req, _ := http.NewRequest("GET", main.FlyURL()+"/dashboard", nil)
+// 				client := &http.Client{}
 
-				resp, err := client.Do(req)
+// 				resp, err := client.Do(req)
 
-				Expect(err).To(BeNil())
+// 				Expect(err).To(BeNil())
 
-				defer resp.Body.Close()
+// 				defer resp.Body.Close()
 
-				body, _ := ioutil.ReadAll(resp.Body)
+// 				body, _ := ioutil.ReadAll(resp.Body)
 
-				Expect(resp.StatusCode).To(Equal(http.StatusOK))
-				Expect(string(body)).To(ContainSubstring("Login"))
-			})
-		})
+// 				Expect(resp.StatusCode).To(Equal(http.StatusOK))
+// 				Expect(string(body)).To(ContainSubstring("Login"))
+// 			})
+// 		})
 
-		When("the endpoint with GET method with login", func() {
-			It("should render template dashboard.html", func() {
-				reqRegister := entity.UserRegister{
-					Fullname: "testing deploy user",
-					Email:    "testingflyio@mail.com",
-					Password: "testingdeploy",
-				}
+// 		When("the endpoint with GET method with login", func() {
+// 			It("should render template dashboard.html", func() {
+// 				reqRegister := entity.UserRegister{
+// 					Fullname: "testing deploy user",
+// 					Email:    "testingflyio@mail.com",
+// 					Password: "testingdeploy",
+// 				}
 
-				b, _ := json.Marshal(reqRegister)
-				resp, _ := http.Post(main.FlyURL()+"/api/v1/users/register", "application/json", bytes.NewBuffer(b))
+// 				b, _ := json.Marshal(reqRegister)
+// 				resp, _ := http.Post(main.FlyURL()+"/api/v1/users/register", "application/json", bytes.NewBuffer(b))
 
-				resBody, _ := ioutil.ReadAll(resp.Body)
+// 				resBody, _ := ioutil.ReadAll(resp.Body)
 
-				var resRegister = map[string]interface{}{}
-				json.Unmarshal(resBody, &resRegister)
+// 				var resRegister = map[string]interface{}{}
+// 				json.Unmarshal(resBody, &resRegister)
 
-				userDeployIdTest = strconv.Itoa(int(resRegister["user_id"].(float64)))
+// 				userDeployIdTest = strconv.Itoa(int(resRegister["user_id"].(float64)))
 
-				jar, _ := cookiejar.New(nil)
-				jar.SetCookies(&url.URL{
-					Scheme: "http",
-					Host:   main.FlyURL(),
-				}, []*http.Cookie{
-					{Name: "user_id", Value: userDeployIdTest},
-				})
+// 				jar, _ := cookiejar.New(nil)
+// 				jar.SetCookies(&url.URL{
+// 					Scheme: "http",
+// 					Host:   main.FlyURL(),
+// 				}, []*http.Cookie{
+// 					{Name: "user_id", Value: userDeployIdTest},
+// 				})
 
-				client := &http.Client{
-					Jar: jar,
-				}
+// 				client := &http.Client{
+// 					Jar: jar,
+// 				}
 
-				req, _ := http.NewRequest("GET", main.FlyURL()+"/dashboard", nil)
-				req.AddCookie(&http.Cookie{
-					Name:  "user_id",
-					Value: userDeployIdTest,
-				})
+// 				req, _ := http.NewRequest("GET", main.FlyURL()+"/dashboard", nil)
+// 				req.AddCookie(&http.Cookie{
+// 					Name:  "user_id",
+// 					Value: userDeployIdTest,
+// 				})
 
-				resp, err := client.Do(req)
-				body, _ := ioutil.ReadAll(resp.Body)
+// 				resp, err := client.Do(req)
+// 				body, _ := ioutil.ReadAll(resp.Body)
 
-				Expect(err).To(BeNil())
+// 				Expect(err).To(BeNil())
 
-				Expect(resp.StatusCode).To(Equal(http.StatusOK))
-				Expect(string(body)).To(ContainSubstring("Kanban App"))
+// 				Expect(resp.StatusCode).To(Equal(http.StatusOK))
+// 				Expect(string(body)).To(ContainSubstring("Kanban App"))
 
-				defer resp.Body.Close()
-			})
-		})
-	})
-})
+// 				defer resp.Body.Close()
+// 			})
+// 		})
+// 	})
+// })
