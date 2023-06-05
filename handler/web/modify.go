@@ -254,7 +254,7 @@ func (a *modifyWeb) UpdateTaskReminderProcess(w http.ResponseWriter, r *http.Req
 		}
 
 		if respCode == 200 {
-			http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+			http.Redirect(w, r, "/dashboard", http.StatusMovedPermanently)
 		} else {
 			http.Redirect(w, r, "/task/update/reminder?task_id="+taskId, http.StatusSeeOther)
 		}

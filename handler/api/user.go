@@ -4,7 +4,6 @@ import (
 	"a21hc3NpZ25tZW50/entity"
 	"a21hc3NpZ25tZW50/service"
 	"encoding/json"
-	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -33,7 +32,7 @@ func (u *userAPI) Login(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		log.Println(err.Error())
+
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("invalid decode json"))
 		return
 	}
@@ -51,7 +50,7 @@ func (u *userAPI) Login(w http.ResponseWriter, r *http.Request) {
 	id, err := u.userService.Login(r.Context(), &userr)
 	if err != nil {
 		w.WriteHeader(500)
-		log.Println(err.Error())
+
 		json.NewEncoder(w).Encode(entity.NewErrorResponse(err.Error()))
 		return
 	}
@@ -78,7 +77,7 @@ func (u *userAPI) Register(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		log.Println(err.Error())
+
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("invalid decode json"))
 		return
 	}
@@ -97,7 +96,7 @@ func (u *userAPI) Register(w http.ResponseWriter, r *http.Request) {
 	id, err := u.userService.Register(r.Context(), &userr)
 	if err != nil {
 		w.WriteHeader(500)
-		log.Println(err.Error())
+
 		json.NewEncoder(w).Encode(entity.NewErrorResponse(err.Error()))
 		return
 	}
@@ -132,7 +131,7 @@ func (u *userAPI) GetUser(w http.ResponseWriter, r *http.Request) {
 	user, err := u.userService.GetUser(r.Context(), int(idLogin))
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		log.Println(err.Error())
+
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("error internal server"))
 		return
 	}
@@ -149,7 +148,7 @@ func (u *userAPI) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		log.Println(err.Error())
+
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("invalid decode json"))
 		return
 	}
@@ -166,7 +165,7 @@ func (u *userAPI) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		log.Println(err.Error())
+
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("error internal server"))
 		return
 	}
@@ -190,7 +189,7 @@ func (u *userAPI) Delete(w http.ResponseWriter, r *http.Request) {
 	err := u.userService.Delete(r.Context(), int(deleteUserId))
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		log.Println(err.Error())
+
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("error internal server"))
 		return
 	}

@@ -62,7 +62,6 @@ func (c *categoryAPI) CreateNewCategory(w http.ResponseWriter, r *http.Request) 
 	err := json.NewDecoder(r.Body).Decode(&category)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		log.Println(err.Error())
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("invalid category request"))
 		return
 	}
