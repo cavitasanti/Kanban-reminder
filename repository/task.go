@@ -89,7 +89,7 @@ func (r *taskRepository) UpdateMarkTask(ctx context.Context, task map[string]int
 // UpdateTaskReminder updates the reminder of a task
 func (r *taskRepository) UpdateTaskReminder(ctx context.Context, task *entity.Task) error {
 	// return nil // TODO: replace this
-	err := r.db.WithContext(ctx).Model(&entity.Task{}).Where("id = ?", task.ID).Updates(&entity.Task{Reminder: task.Reminder}).Error
+	err := r.db.WithContext(ctx).Model(&entity.Task{}).Where("id = ?", task.ID).Update("reminder", task.Reminder).Error
 	if err != nil {
 		return err
 	} else {
