@@ -141,10 +141,11 @@ func (t *taskAPI) GetTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func (t *taskAPI) CreateNewTask(w http.ResponseWriter, r *http.Request) {
-	var task entity.TaskRequest
-	id := r.Context().Value("id").(string)
-	idLogin, _ := strconv.Atoi(id)
-	err := json.NewDecoder(r.Body).Decode(&task)
+	var task entity.TaskRequest            // membuat variabel task dengan tipe data TaskRequest
+	id := r.Context().Value("id").(string) // mengambil data id dari kuki
+	idLogin, _ := strconv.Atoi(id)         // mengubah string menjadi int
+
+	err := json.NewDecoder(r.Body).Decode(&task) // mengubah data json menjadi struct
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 
@@ -163,7 +164,7 @@ func (t *taskAPI) CreateNewTask(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("invalid user id"))
 	}
 
-	tsk, err := t.taskService.StoreTask(r.Context(), &entity.Task{
+	tsk, err := t.taskService.StoreTask(r.Context(), &entity.Task{ // memasukkan data ke database
 		// ID:          task.ID,
 		Title:       task.Title,
 		Description: task.Description,
@@ -171,7 +172,7 @@ func (t *taskAPI) CreateNewTask(w http.ResponseWriter, r *http.Request) {
 		CategoryID: task.CategoryID,
 		UserID:     idLogin,
 	})
-	if err != nil {
+	if err != nil { // jika terjadi error pada penginputan data
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("error internal server"))
 	}

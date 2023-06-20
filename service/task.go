@@ -53,7 +53,7 @@ func (s *taskService) GetTasks(ctx context.Context, id int) ([]entity.Task, erro
 }
 
 func (s *taskService) StoreTask(ctx context.Context, task *entity.Task) (entity.Task, error) {
-	_, err := s.taskRepo.StoreTask(ctx, task)
+	_, err := s.taskRepo.StoreTask(ctx, task) // memanggil fungsi StoreTask di repository
 	if err != nil {
 		return entity.Task{}, err
 	}
