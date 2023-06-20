@@ -35,12 +35,11 @@ type ClientHandler struct {
 var Resources embed.FS
 
 func FlyURL() string {
-	// return "https://cavitasanti-final-project-be2981380.fly.dev" // TODO: replace this
 	return ""
 }
 
 func main() {
-	//TODO: hapus jika sudah di deploy di fly.io
+
 	os.Setenv("DATABASE_URL", "postgres://postgres:12345678@localhost:2502/kanbanapp")
 
 	wg := sync.WaitGroup{}
