@@ -37,7 +37,6 @@ func (t *taskAPI) MarkTask(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("internal server error"))
 		return
 	}
-	// http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]interface{}{
 		"task_id": taskId,
@@ -54,7 +53,6 @@ func (t *taskAPI) UnMarkTask(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("internal server error"))
 		return
 	}
-	// http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]interface{}{
 		"task_id": taskId,
@@ -98,7 +96,6 @@ func (t *taskAPI) Reminder(w http.ResponseWriter, r *http.Request) {
 }
 
 func (t *taskAPI) GetTask(w http.ResponseWriter, r *http.Request) {
-	// TODO: answer here
 	userId := r.Context().Value("id")
 	taskId := r.URL.Query().Get("task_id")
 
@@ -142,7 +139,7 @@ func (t *taskAPI) GetTask(w http.ResponseWriter, r *http.Request) {
 
 func (t *taskAPI) CreateNewTask(w http.ResponseWriter, r *http.Request) {
 	var task entity.TaskRequest            // membuat variabel task dengan tipe data TaskRequest
-	id := r.Context().Value("id").(string) // mengambil data id dari kuki
+	id := r.Context().Value("id").(string) // mengambil data id dari context
 	idLogin, _ := strconv.Atoi(id)         // mengubah string menjadi int
 
 	err := json.NewDecoder(r.Body).Decode(&task) // mengubah data json menjadi struct
@@ -153,7 +150,6 @@ func (t *taskAPI) CreateNewTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO: answer here
 	if task.Title == "" || task.Description == "" || task.CategoryID == 0 {
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("invalid task request"))
@@ -165,12 +161,10 @@ func (t *taskAPI) CreateNewTask(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tsk, err := t.taskService.StoreTask(r.Context(), &entity.Task{ // memasukkan data ke database
-		// ID:          task.ID,
 		Title:       task.Title,
 		Description: task.Description,
-		// Completed:   task.Completed,
-		CategoryID: task.CategoryID,
-		UserID:     idLogin,
+		CategoryID:  task.CategoryID,
+		UserID:      idLogin,
 	})
 	if err != nil { // jika terjadi error pada penginputan data
 		w.WriteHeader(http.StatusInternalServerError)
@@ -186,7 +180,6 @@ func (t *taskAPI) CreateNewTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func (t *taskAPI) DeleteTask(w http.ResponseWriter, r *http.Request) {
-	// TODO: answer here
 	userId := r.Context().Value("id").(string)
 	if userId == "" {
 		w.WriteHeader(http.StatusBadRequest)
@@ -227,8 +220,6 @@ func (t *taskAPI) UpdateTask(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("invalid decode json"))
 		return
 	}
-
-	// TODO: answer here
 
 	if id == "" {
 		w.WriteHeader(http.StatusBadRequest)

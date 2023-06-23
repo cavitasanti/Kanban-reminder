@@ -27,7 +27,7 @@ func NewTaskRepository(db *gorm.DB) TaskRepository {
 }
 
 func (r *taskRepository) GetTasks(ctx context.Context, id int) ([]entity.Task, error) {
-	// return nil, nil // TODO: replace this
+	// return nil, nil
 	var tasks []entity.Task
 	err := r.db.WithContext(ctx).Where("user_id = ?", id).Find(&tasks).Error
 	if err != nil {
@@ -37,7 +37,7 @@ func (r *taskRepository) GetTasks(ctx context.Context, id int) ([]entity.Task, e
 }
 
 func (r *taskRepository) StoreTask(ctx context.Context, task *entity.Task) (taskId int, err error) {
-	// return 0, nil // TODO: replace this
+	// return 0, nil
 	err = r.db.WithContext(ctx).Create(&task).Error
 	if err != nil {
 		return 0, err
@@ -47,7 +47,7 @@ func (r *taskRepository) StoreTask(ctx context.Context, task *entity.Task) (task
 }
 
 func (r *taskRepository) GetTaskByID(ctx context.Context, id int) (entity.Task, error) {
-	// return entity.Task{}, nil // TODO: replace this
+	// return entity.Task{}, nil
 	var task entity.Task
 	err := r.db.WithContext(ctx).Where("id = ?", id).First(&task).Error
 	if err != nil {
@@ -57,7 +57,7 @@ func (r *taskRepository) GetTaskByID(ctx context.Context, id int) (entity.Task, 
 }
 
 func (r *taskRepository) GetTasksByCategoryID(ctx context.Context, catId int) ([]entity.Task, error) {
-	// return nil, nil // TODO: replace this
+	// return nil, nil
 	var tasks []entity.Task
 	err := r.db.WithContext(ctx).Where("category_id = ?", catId).Find(&tasks).Error
 	if err != nil {
@@ -67,7 +67,7 @@ func (r *taskRepository) GetTasksByCategoryID(ctx context.Context, catId int) ([
 }
 
 func (r *taskRepository) UpdateTask(ctx context.Context, task *entity.Task) error {
-	// return nil // TODO: replace this
+	// return nil
 	err := r.db.WithContext(ctx).Model(&entity.Task{}).Where("id = ?", task.ID).Updates(&task).Error
 	if err != nil {
 		return err
@@ -77,7 +77,7 @@ func (r *taskRepository) UpdateTask(ctx context.Context, task *entity.Task) erro
 }
 
 func (r *taskRepository) UpdateMarkTask(ctx context.Context, task map[string]interface{}) error {
-	// return nil // TODO: replace this
+	// return nil
 	err := r.db.WithContext(ctx).Model(&entity.Task{}).Where("id = ?", task["ID"]).Update("completed", task["completed"]).Error
 	if err != nil {
 		return err
@@ -88,7 +88,7 @@ func (r *taskRepository) UpdateMarkTask(ctx context.Context, task map[string]int
 
 // UpdateTaskReminder updates the reminder of a task
 func (r *taskRepository) UpdateTaskReminder(ctx context.Context, task *entity.Task) error {
-	// return nil // TODO: replace this
+	// return nil
 	err := r.db.WithContext(ctx).Model(&entity.Task{}).Where("id = ?", task.ID).Update("reminder", task.Reminder).Error
 	if err != nil {
 		return err
@@ -98,7 +98,7 @@ func (r *taskRepository) UpdateTaskReminder(ctx context.Context, task *entity.Ta
 }
 
 func (r *taskRepository) DeleteTask(ctx context.Context, id int) error {
-	// return nil // TODO: replace this
+	// return nil
 	err := r.db.WithContext(ctx).Where("id = ?", id).Delete(&entity.Task{}).Error
 	if err != nil {
 		return err

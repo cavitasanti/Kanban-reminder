@@ -72,12 +72,9 @@ func (d *dashboardWeb) Dashboard(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
-	// ignore this
 	_ = dataTemplate
 	_ = funcMap
-	//
 
-	// TODO: answer here
 	var header = path.Join("views", "general", "header.html")
 	var dashboard = path.Join("views", "main", "dashboard.html")
 	tmpl, err := template.New("dashboard.html").Funcs(funcMap).ParseFS(d.embed, dashboard, header)

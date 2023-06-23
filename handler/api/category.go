@@ -25,7 +25,6 @@ func NewCategoryAPI(categoryService service.CategoryService) *categoryAPI {
 }
 
 func (c *categoryAPI) GetCategory(w http.ResponseWriter, r *http.Request) {
-	// TODO: answer here
 	userId := r.Context().Value("id")
 
 	if userId == nil {
@@ -93,7 +92,6 @@ func (c *categoryAPI) CreateNewCategory(w http.ResponseWriter, r *http.Request) 
 }
 
 func (c *categoryAPI) DeleteCategory(w http.ResponseWriter, r *http.Request) {
-	// TODO: answer here
 	userId := r.Context().Value("id").(string)
 	if userId == "" {
 		w.WriteHeader(http.StatusBadRequest)

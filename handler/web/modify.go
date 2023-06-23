@@ -71,7 +71,6 @@ func (a *modifyWeb) MarkTask(w http.ResponseWriter, r *http.Request) {
 	if respCode == 200 {
 		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 	}
-	// http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 }
 
 func (a *modifyWeb) UnMarkTask(w http.ResponseWriter, r *http.Request) {
@@ -91,11 +90,8 @@ func (a *modifyWeb) UnMarkTask(w http.ResponseWriter, r *http.Request) {
 func (a *modifyWeb) AddTask(w http.ResponseWriter, r *http.Request) {
 	catId := r.URL.Query().Get("category")
 
-	// ignore this
 	_ = catId
-	//
 
-	// TODO: answer here
 	filepath := path.Join("views", "main", "add-task.html")
 	header := path.Join("views", "general", "header.html")
 	tpl, err := template.ParseFS(a.embed, filepath, header)
@@ -123,11 +119,8 @@ func (a *modifyWeb) AddTaskProcess(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// ignore this
 	_ = respCode
-	//
 
-	// TODO: answer here
 	if respCode == 201 {
 		http.Redirect(w, r, "/dashboard", http.StatusFound)
 		return
@@ -139,7 +132,6 @@ func (a *modifyWeb) AddTaskProcess(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *modifyWeb) AddCategory(w http.ResponseWriter, r *http.Request) {
-	// TODO: answer here
 	filepath := path.Join("views", "main", "add-category.html")
 	header := path.Join("views", "general", "header.html")
 
@@ -168,10 +160,8 @@ func (a *modifyWeb) AddCategoryProcess(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// ignore this
 	_ = respCode
 
-	// TODO: answer here
 	if respCode == 201 {
 		http.Redirect(w, r, "/dashboard", http.StatusFound)
 		return
@@ -190,11 +180,8 @@ func (a *modifyWeb) UpdateTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// ignore this
 	_ = task
-	//
 
-	// TODO: answer here
 	filepath := path.Join("views", "main", "update-task.html")
 	header := path.Join("views", "general", "header.html")
 	tpl, err := template.ParseFS(a.embed, filepath, header)
@@ -249,9 +236,7 @@ func (a *modifyWeb) UpdateTaskReminder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// ignore this
 	_ = task
-	//
 
 	filepath := path.Join("views", "main", "update-task-reminder.html")
 	header := path.Join("views", "general", "header.html")
@@ -278,7 +263,6 @@ func (a *modifyWeb) UpdateTaskReminderProcess(w http.ResponseWriter, r *http.Req
 	categoryId := r.URL.Query().Get("category_id")
 
 	if categoryId == "" {
-		// reminder := r.FormValue("reminder")
 
 		respCode, err := a.taskClient.UpdateTaskReminder(taskId, reminder, r.Context().Value("id").(string))
 		if err != nil {
@@ -312,7 +296,6 @@ func (a *modifyWeb) DeleteTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO: answer here
 	http.Redirect(w, r, "/dashboard", http.StatusFound)
 }
 
@@ -325,6 +308,5 @@ func (a *modifyWeb) DeleteCategory(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO: answer here
 	http.Redirect(w, r, "/dashboard", http.StatusFound)
 }

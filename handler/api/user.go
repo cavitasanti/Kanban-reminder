@@ -37,7 +37,6 @@ func (u *userAPI) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO: answer here
 	if user.Email == "" || user.Password == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("email or password is empty"))
@@ -82,7 +81,6 @@ func (u *userAPI) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO: answer here
 	if user.Email == "" || user.Password == "" || user.Fullname == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("register data is empty"))
@@ -111,7 +109,6 @@ func (u *userAPI) Register(w http.ResponseWriter, r *http.Request) {
 }
 
 func (u *userAPI) Logout(w http.ResponseWriter, r *http.Request) {
-	// TODO: answer here
 	http.SetCookie(w, &http.Cookie{
 		Name:    "user_id",
 		Value:   "",

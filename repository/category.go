@@ -25,7 +25,7 @@ func NewCategoryRepository(db *gorm.DB) CategoryRepository {
 }
 
 func (r *categoryRepository) GetCategoriesByUserId(ctx context.Context, id int) ([]entity.Category, error) {
-	// return nil, nil // TODO: replace this
+	// return nil, nil
 	var categories []entity.Category
 	err := r.db.WithContext(ctx).Where("user_id = ?", id).Find(&categories).Error
 	if err != nil {
@@ -36,7 +36,7 @@ func (r *categoryRepository) GetCategoriesByUserId(ctx context.Context, id int) 
 }
 
 func (r *categoryRepository) StoreCategory(ctx context.Context, category *entity.Category) (categoryId int, err error) {
-	// return 0, nil // TODO: replace this
+	// return 0, nil
 	err = r.db.WithContext(ctx).Create(category).Error
 	if err != nil {
 		return 0, err
@@ -46,7 +46,7 @@ func (r *categoryRepository) StoreCategory(ctx context.Context, category *entity
 }
 
 func (r *categoryRepository) StoreManyCategory(ctx context.Context, categories []entity.Category) error {
-	// return nil // TODO: replace this
+	// return nil
 	err := r.db.WithContext(ctx).Create(&categories).Error
 	if err != nil {
 		return err
@@ -56,7 +56,7 @@ func (r *categoryRepository) StoreManyCategory(ctx context.Context, categories [
 }
 
 func (r *categoryRepository) GetCategoryByID(ctx context.Context, id int) (entity.Category, error) {
-	// return entity.Category{}, nil // TODO: replace this
+	// return entity.Category{}, nil
 	var category entity.Category
 	err := r.db.WithContext(ctx).Where("id = ?", id).First(&category).Error
 	if err != nil {

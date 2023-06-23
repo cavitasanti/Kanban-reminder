@@ -28,7 +28,6 @@ func NewAuthWeb(userClient client.UserClient, embed embed.FS) *authWeb {
 }
 
 func (a *authWeb) Login(w http.ResponseWriter, r *http.Request) {
-	// TODO: answer here
 
 	filepath := path.Join("views", "auth", "login.html")
 	header := path.Join("views", "general", "header.html")
@@ -82,12 +81,10 @@ func (a *authWeb) LoginProcess(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		// http.Redirect(w, r, "/login", http.StatusSeeOther)
 	}
 }
 
 func (a *authWeb) Register(w http.ResponseWriter, r *http.Request) {
-	// TODO: answer here
 
 	filepath := path.Join("views", "auth", "register.html")
 	header := path.Join("views", "general", "header.html")
@@ -114,10 +111,6 @@ func (a *authWeb) RegisterProcess(w http.ResponseWriter, r *http.Request) {
 	password := r.FormValue("password")
 
 	userId, status, err := a.userClient.Register(fullname, email, password)
-	// if err != nil {
-	// 	http.Error(w, err.Error(), http.StatusInternalServerError)
-	// 	return
-	// }
 
 	if status == 201 {
 		http.SetCookie(w, &http.Cookie{
@@ -148,8 +141,6 @@ func (a *authWeb) RegisterProcess(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *authWeb) Logout(w http.ResponseWriter, r *http.Request) {
-	// TODO: answer here
-
 	http.SetCookie(w, &http.Cookie{
 		Name:   "user_id",
 		Value:  "",
